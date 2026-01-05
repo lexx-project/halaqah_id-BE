@@ -1,3 +1,13 @@
+model User {
+  id_user  Int    @id @default(autoincrement())
+  email    String @unique
+  password String
+  role     String @default("muhafiz")
+  // profile Profile?
+
+  @@map("user")
+}
+
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 

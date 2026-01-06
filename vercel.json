@@ -1,7 +1,6 @@
 {
   "version": 2,
-  "rewrites": [{ "source": "/(.*)", "destination": "/" }],
-  "projects": {
-    "framework": null
-  }
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/api/index.js" }
+  ]
 }

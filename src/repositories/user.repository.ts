@@ -7,3 +7,9 @@ export const findByEmail = async (email: string) => {
     },
   });
 };
+
+export const create = async (data: any) => {
+  return await prisma.user.create({
+    data,
+  });
+};

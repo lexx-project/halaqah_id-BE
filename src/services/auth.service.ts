@@ -24,3 +24,22 @@ export const login = async (data: any) => {
 
   return { user: userResponse, token };
 };
+
+export const registerMuhafiz = async (data: any) => {
+  const existingUser = await userRepo.findByEmail(data.email);
+  if (existingUser) {
+    const error: any = new Error("User already exists");
+    error.status = 400;
+    throw error;
+  }
+
+  const hashedPassword = await bcrypt.hash(data.password, 10);
+  const newUser = await userRepo.create({
+    email: data.email,
+    password: hashedPassword,
+    role: "muhafiz",
+  });
+
+  const { password: _, ...userResponse } = newUser;
+  return userResponse;
+};

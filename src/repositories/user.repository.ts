@@ -8,6 +8,7 @@ export const findAllMuhafiz = async () => {
     },
     select: {
       id_user: true,
+      username: true,
       email: true,
       role: true,
     },
@@ -24,7 +25,12 @@ export const findByEmail = async (email: string) => {
 
 export const create = async (data: any) => {
   return await prisma.user.create({
-    data,
+    data: {
+      email: data.email,
+      username: data.username,
+      password: data.password,
+      role: data.role,
+    },
   });
 };
 

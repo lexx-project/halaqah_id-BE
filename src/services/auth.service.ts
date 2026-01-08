@@ -8,7 +8,18 @@ export const getAllMuhafidz = async () => {
 };
 
 export const login = async (data: any) => {
-  const user = await userRepo.findByEmail(data.email);
+  const user = await prisma.user.findFirst({
+    where: {
+      OR: [
+        {
+          email: data.email,
+        },
+        {
+          username: data.username,
+        },
+      ],
+    },
+  });
 
   if (!user || !(await bcrypt.compare(data.password, user.password))) {
     const error: any = new Error("Invalid email or password");
@@ -31,7 +42,12 @@ export const login = async (data: any) => {
 };
 
 export const registerMuhafiz = async (data: any) => {
-  const existingUser = await userRepo.findByEmail(data.email);
+  const existingUser = await prisma.user.findUnique({
+    where: {
+      email: data.email,
+      username: data.username,
+    },
+  });
   if (existingUser) {
     const error: any = new Error("User already exists");
     error.status = 400;
@@ -41,6 +57,7 @@ export const registerMuhafiz = async (data: any) => {
   const hashedPassword = await bcrypt.hash(data.password, 10);
   const newUser = await userRepo.create({
     email: data.email,
+    username: data.username,
     password: hashedPassword,
     role: "muhafiz",
   });

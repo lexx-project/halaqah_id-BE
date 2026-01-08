@@ -8,7 +8,18 @@ export const getAllMuhafidz = async () => {
 };
 
 export const login = async (data: any) => {
-  const user = await userRepo.findByEmail(data.email);
+  const user = await prisma.user.findFirst({
+    where: {
+      OR: [
+        {
+          email: data.email,
+        },
+        {
+          username: data.username,
+        },
+      ],
+    },
+  });
 
   if (!user || !(await bcrypt.compare(data.password, user.password))) {
     const error: any = new Error("Invalid email or password");
@@ -31,7 +42,12 @@ export const login = async (data: any) => {
 };
 
 export const registerMuhafiz = async (data: any) => {
-  const existingUser = await userRepo.findByEmail(data.email);
+  const existingUser = await prisma.user.findUnique({
+    where: {
+      email: data.email,
+      username: data.username,
+    },
+  });
   if (existingUser) {
     const error: any = new Error("User already exists");
     error.status = 400;
@@ -41,6 +57,7 @@ export const registerMuhafiz = async (data: any) => {
   const hashedPassword = await bcrypt.hash(data.password, 10);
   const newUser = await userRepo.create({
     email: data.email,
+    username: data.username,
     password: hashedPassword,
     role: "muhafiz",
   });
@@ -63,4 +80,28 @@ export const deleteMuhafiz = async (id: number) => {
   }
 
   return await userRepo.softDelete(id);
+};
+
+export const updateMuhafiz = async (
+  id: number,
+  data: { username?: string; email?: string }
+) => {
+  const user = await prisma.user.findUnique({ where: { id_user: id } });
+  if (!user) {
+    const error: any = new Error("User tidak ditemukan");
+    error.status = 404;
+    throw error;
+  }
+
+  if (data.username && data.username !== user.username) {
+    const existingUser = await prisma.user.findUnique({
+      where: { username: data.username },
+    });
+    if (existingUser) {
+      const error: any = new Error("Username already exists");
+      error.status = 400;
+      throw error;
+    }
+  }
+  return await userRepo.updateUser(id, data);
 };

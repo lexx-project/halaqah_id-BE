@@ -36,5 +36,11 @@ export const softDelete = async (id: number) => {
     data: {
       deleted_at: new Date(),
     },
+    select: {
+      id_user: true,
+      email: true,
+      role: true,
+      deleted_at: true,
+    },
   });
 };

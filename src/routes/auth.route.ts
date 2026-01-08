@@ -20,4 +20,19 @@ router.post(
   roleMiddleware(["superadmin"]),
   authController.register
 );
+
+router.get(
+  "/muhafiz",
+  authMiddleware,
+  roleMiddleware(["superadmin"]),
+  authController.getAllMuhafidz
+);
+
+router.delete(
+  "/muhafiz/:id",
+  authMiddleware,
+  roleMiddleware(["superadmin"]),
+  authController.deleteMuhafidz
+);
+
 export default router;

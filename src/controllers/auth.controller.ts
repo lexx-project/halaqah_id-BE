@@ -12,3 +12,18 @@ export const register = asyncHandler(async (req: Request, res: Response) => {
   const result = await authService.registerMuhafiz(req.body);
   return successResponse(res, "Register berhasil", result);
 });
+
+export const getAllMuhafidz = asyncHandler(
+  async (_req: Request, res: Response) => {
+    const result = await authService.getAllMuhafidz();
+    return successResponse(res, "Data muhafidz berhasil diambil", result);
+  }
+);
+
+export const deleteMuhafidz = asyncHandler(
+  async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const result = await authService.deleteMuhafidz(Number(id));
+    return successResponse(res, "Data muhafidz berhasil dihapus", result);
+  }
+);

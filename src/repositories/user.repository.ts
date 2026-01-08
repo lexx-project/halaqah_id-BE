@@ -1,9 +1,9 @@
 import prisma from "../prisma";
 
-export const findAllMuhafidz = async () => {
+export const findAllMuhafiz = async () => {
   return await prisma.user.findMany({
     where: {
-      role: "muhafidz",
+      role: "muhafiz",
       deleted_at: null,
     },
     select: {

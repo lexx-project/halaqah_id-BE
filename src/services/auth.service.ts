@@ -4,7 +4,7 @@ import * as userRepo from "../repositories/user.repository";
 import prisma from "../prisma";
 
 export const getAllMuhafidz = async () => {
-  return await userRepo.findAllMuhafidz();
+  return await userRepo.findAllMuhafiz();
 };
 
 export const login = async (data: any) => {
@@ -49,7 +49,7 @@ export const registerMuhafiz = async (data: any) => {
   return userResponse;
 };
 
-export const deleteMuhafidz = async (id: number) => {
+export const deleteMuhafiz = async (id: number) => {
   const user = await prisma.user.findUnique({
     where: {
       id_user: id,

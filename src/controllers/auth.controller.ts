@@ -23,7 +23,7 @@ export const getAllMuhafidz = asyncHandler(
 export const deleteMuhafidz = asyncHandler(
   async (req: Request, res: Response) => {
     const { id } = req.params;
-    const result = await authService.deleteMuhafidz(Number(id));
+    const result = await authService.deleteMuhafiz(Number(id));
     return successResponse(res, "Data muhafidz berhasil dihapus", result);
   }
 );

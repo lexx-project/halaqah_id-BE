@@ -1,6 +1,11 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import * as userRepo from "../repositories/user.repository";
+import prisma from "../prisma";
+
+export const getAllMuhafidz = async () => {
+  return await userRepo.findAllMuhafidz();
+};
 
 export const login = async (data: any) => {
   const user = await userRepo.findByEmail(data.email);
@@ -42,4 +47,20 @@ export const registerMuhafiz = async (data: any) => {
 
   const { password: _, ...userResponse } = newUser;
   return userResponse;
+};
+
+export const deleteMuhafidz = async (id: number) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      id_user: id,
+    },
+  });
+
+  if (!user) {
+    const error: any = new Error("User not found");
+    error.status = 404;
+    throw error;
+  }
+
+  return await userRepo.softDelete(id);
 };

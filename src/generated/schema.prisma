@@ -5,6 +5,8 @@ model User {
   role     String @default("muhafiz")
   // profile Profile?
 
+  deleted_at DateTime?
+
   @@map("user")
 }
 

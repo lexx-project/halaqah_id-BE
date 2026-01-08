@@ -81,3 +81,27 @@ export const deleteMuhafiz = async (id: number) => {
 
   return await userRepo.softDelete(id);
 };
+
+export const updateMuhafiz = async (
+  id: number,
+  data: { username?: string; email?: string }
+) => {
+  const user = await prisma.user.findUnique({ where: { id_user: id } });
+  if (!user) {
+    const error: any = new Error("User tidak ditemukan");
+    error.status = 404;
+    throw error;
+  }
+
+  if (data.username && data.username !== user.username) {
+    const existingUser = await prisma.user.findUnique({
+      where: { username: data.username },
+    });
+    if (existingUser) {
+      const error: any = new Error("Username already exists");
+      error.status = 400;
+      throw error;
+    }
+  }
+  return await userRepo.updateUser(id, data);
+};

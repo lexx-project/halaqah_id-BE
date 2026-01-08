@@ -27,3 +27,17 @@ export const deleteMuhafidz = asyncHandler(
     return successResponse(res, "Data muhafidz berhasil dihapus", result);
   }
 );
+
+export const updateMuhafiz = asyncHandler(
+  async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { username, email } = req.body;
+
+    const result = await authService.updateMuhafiz(Number(id), {
+      username,
+      email,
+    });
+
+    return successResponse(res, "Data muhafidz berhasil diupdate", result);
+  }
+);

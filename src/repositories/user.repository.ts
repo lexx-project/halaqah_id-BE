@@ -50,3 +50,18 @@ export const softDelete = async (id: number) => {
     },
   });
 };
+
+export const updateUser = async (id: number, data: any) => {
+  return await prisma.user.update({
+    where: {
+      id_user: id,
+    },
+    data,
+    select: {
+      id_user: true,
+      username: true,
+      email: true,
+      role: true,
+    },
+  });
+};

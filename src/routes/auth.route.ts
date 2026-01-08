@@ -35,4 +35,11 @@ router.delete(
   authController.deleteMuhafidz
 );
 
+router.patch(
+  "/muhafiz/:id",
+  authMiddleware,
+  roleMiddleware(["superadmin"]),
+  authController.updateMuhafiz
+);
+
 export default router;

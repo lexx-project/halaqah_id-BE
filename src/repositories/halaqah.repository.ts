@@ -1,0 +1,75 @@
+import prisma from "../prisma";
+
+export const createHalaqah = async (
+  name_halaqah: string,
+  muhafiz_id: number
+) => {
+  return await prisma.halaqah.create({
+    data: {
+      name_halaqah,
+      muhafiz_id,
+    },
+    include: { muhafiz: true },
+  });
+};
+
+export const getAllHalaqah = async () => {
+  return await prisma.halaqah.findMany({
+    where: {
+      deleted_at: null,
+    },
+    include: {
+      muhafiz: { select: { id_user: true, username: true, email: true } },
+      _count: { select: { santri: true } },
+    },
+  });
+};
+
+export const getHalaqahById = async (id: number) => {
+  return await prisma.halaqah.findUnique({
+    where: {
+      id_halaqah: id,
+      deleted_at: null,
+    },
+    include: {
+      muhafiz: true,
+      santri: true,
+    },
+  });
+};
+
+export const updateHalaqah = async (
+  id: number,
+  data: { name_halaqah: string; muhafiz_id: number }
+) => {
+  return await prisma.halaqah.update({
+    where: { id_halaqah: id },
+    data,
+  });
+};
+
+export const deleteHalaqah = async (id: number) => {
+  return await prisma.halaqah.update({
+    where: { id_halaqah: id },
+    data: {
+      deleted_at: new Date(),
+    },
+  });
+};
+
+export const getDeletedHalaqah = async () => {
+  return await prisma.halaqah.findMany({
+    where: { NOT: { deleted_at: null } },
+  });
+};
+
+export const restoreHalaqah = async (id: number) => {
+  return await prisma.halaqah.update({
+    where: {
+      id_halaqah: id,
+    },
+    data: {
+      deleted_at: null,
+    },
+  });
+};

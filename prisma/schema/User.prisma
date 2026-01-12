@@ -4,7 +4,7 @@ model User {
     email String @unique
     password String
     role String @default("muhafiz")
-    // profile Profile?
+    halaqah    Halaqah?
 
     deleted_at DateTime?
 

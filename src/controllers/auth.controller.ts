@@ -13,18 +13,18 @@ export const register = asyncHandler(async (req: Request, res: Response) => {
   return successResponse(res, "Register berhasil", result);
 });
 
-export const getAllMuhafidz = asyncHandler(
+export const getAllmuhafiz = asyncHandler(
   async (_req: Request, res: Response) => {
-    const result = await authService.getAllMuhafidz();
-    return successResponse(res, "Data muhafidz berhasil diambil", result);
+    const result = await authService.getAllmuhafiz();
+    return successResponse(res, "Data muhafiz berhasil diambil", result);
   }
 );
 
-export const deleteMuhafidz = asyncHandler(
+export const deletemuhafiz = asyncHandler(
   async (req: Request, res: Response) => {
     const { id } = req.params;
     const result = await authService.deleteMuhafiz(Number(id));
-    return successResponse(res, "Data muhafidz berhasil dihapus", result);
+    return successResponse(res, "Data muhafiz berhasil dihapus", result);
   }
 );
 
@@ -38,7 +38,7 @@ export const updateMuhafiz = asyncHandler(
       email,
     });
 
-    return successResponse(res, "Data muhafidz berhasil diupdate", result);
+    return successResponse(res, "Data muhafiz berhasil diupdate", result);
   }
 );
 

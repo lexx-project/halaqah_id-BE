@@ -1,0 +1,20 @@
+enum KategoriTarget {
+    RINGAN
+    SEDANG
+    INTENSE
+    KHUSUS
+}
+
+model Santri {
+    id_santri Int @id @default(autoincrement())
+    nama_santri String
+    target KategoriTarget @default(RINGAN)
+
+    halaqah_id Int
+    halaqah  Halaqah @relation(fields: [halaqah_id], references: [id_halaqah])
+
+// absensi Absensi[]
+// setoran Setoran[]
+
+    @@map("santri")
+}

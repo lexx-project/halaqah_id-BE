@@ -120,6 +120,20 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.HalaqahScalarFieldEnum = {
+  id_halaqah: 'id_halaqah',
+  name_halaqah: 'name_halaqah',
+  muhafiz_id: 'muhafiz_id',
+  deleted_at: 'deleted_at'
+};
+
+exports.Prisma.SantriScalarFieldEnum = {
+  id_santri: 'id_santri',
+  nama_santri: 'nama_santri',
+  target: 'target',
+  halaqah_id: 'halaqah_id'
+};
+
 exports.Prisma.UserScalarFieldEnum = {
   id_user: 'id_user',
   username: 'username',
@@ -143,9 +157,16 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-
+exports.KategoriTarget = exports.$Enums.KategoriTarget = {
+  RINGAN: 'RINGAN',
+  SEDANG: 'SEDANG',
+  INTENSE: 'INTENSE',
+  KHUSUS: 'KHUSUS'
+};
 
 exports.Prisma.ModelName = {
+  Halaqah: 'Halaqah',
+  Santri: 'Santri',
   User: 'User'
 };
 

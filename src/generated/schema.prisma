@@ -1,10 +1,45 @@
+model Halaqah {
+  id_halaqah   Int    @id @default(autoincrement())
+  name_halaqah String
+
+  muhafiz_id Int  @unique
+  muhafiz    User @relation(fields: [muhafiz_id], references: [id_user])
+
+  santri Santri[]
+
+  deleted_at DateTime?
+
+  @@map("halaqah")
+}
+
+enum KategoriTarget {
+  RINGAN
+  SEDANG
+  INTENSE
+  KHUSUS
+}
+
+model Santri {
+  id_santri   Int            @id @default(autoincrement())
+  nama_santri String
+  target      KategoriTarget @default(RINGAN)
+
+  halaqah_id Int
+  halaqah    Halaqah @relation(fields: [halaqah_id], references: [id_halaqah])
+
+  // absensi Absensi[]
+  // setoran Setoran[]
+
+  @@map("santri")
+}
+
 model User {
-  id_user  Int    @id @default(autoincrement())
-  username String @unique
-  email    String @unique
+  id_user  Int      @id @default(autoincrement())
+  username String   @unique
+  email    String   @unique
   password String
-  role     String @default("muhafiz")
-  // profile Profile?
+  role     String   @default("muhafiz")
+  halaqah  Halaqah?
 
   deleted_at DateTime?
 

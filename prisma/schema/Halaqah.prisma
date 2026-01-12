@@ -1,0 +1,13 @@
+model Halaqah {
+    id_halaqah Int @id @default(autoincrement())
+    name_halaqah String
+
+    muhafiz_id Int @unique
+    muhafiz User @relation(fields: [muhafiz_id], references: [id_user])
+
+    santri Santri[]
+
+    deleted_at DateTime?
+
+    @@map("halaqah")
+}

@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import * as userRepo from "../repositories/user.repository";
 import prisma from "../prisma";
 
-export const getAllMuhafidz = async () => {
+export const getAllmuhafiz = async () => {
   return await userRepo.findAllMuhafiz();
 };
 

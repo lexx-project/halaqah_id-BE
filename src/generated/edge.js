@@ -92,6 +92,20 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.HalaqahScalarFieldEnum = {
+  id_halaqah: 'id_halaqah',
+  name_halaqah: 'name_halaqah',
+  muhafiz_id: 'muhafiz_id',
+  deleted_at: 'deleted_at'
+};
+
+exports.Prisma.SantriScalarFieldEnum = {
+  id_santri: 'id_santri',
+  nama_santri: 'nama_santri',
+  target: 'target',
+  halaqah_id: 'halaqah_id'
+};
+
 exports.Prisma.UserScalarFieldEnum = {
   id_user: 'id_user',
   username: 'username',
@@ -115,9 +129,16 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-
+exports.KategoriTarget = exports.$Enums.KategoriTarget = {
+  RINGAN: 'RINGAN',
+  SEDANG: 'SEDANG',
+  INTENSE: 'INTENSE',
+  KHUSUS: 'KHUSUS'
+};
 
 exports.Prisma.ModelName = {
+  Halaqah: 'Halaqah',
+  Santri: 'Santri',
   User: 'User'
 };
 /**
@@ -128,10 +149,10 @@ const config = {
   "clientVersion": "7.2.0",
   "engineVersion": "0c8ef2ce45c83248ab3df073180d5eda9e8be7a3",
   "activeProvider": "postgresql",
-  "inlineSchema": "model User {\n  id_user  Int    @id @default(autoincrement())\n  username String @unique\n  email    String @unique\n  password String\n  role     String @default(\"muhafiz\")\n  // profile Profile?\n\n  deleted_at DateTime?\n\n  @@map(\"user\")\n}\n\n// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../../src/generated\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n"
+  "inlineSchema": "model Halaqah {\n  id_halaqah   Int    @id @default(autoincrement())\n  name_halaqah String\n\n  muhafiz_id Int  @unique\n  muhafiz    User @relation(fields: [muhafiz_id], references: [id_user])\n\n  santri Santri[]\n\n  deleted_at DateTime?\n\n  @@map(\"halaqah\")\n}\n\nenum KategoriTarget {\n  RINGAN\n  SEDANG\n  INTENSE\n  KHUSUS\n}\n\nmodel Santri {\n  id_santri   Int            @id @default(autoincrement())\n  nama_santri String\n  target      KategoriTarget @default(RINGAN)\n\n  halaqah_id Int\n  halaqah    Halaqah @relation(fields: [halaqah_id], references: [id_halaqah])\n\n  // absensi Absensi[]\n  // setoran Setoran[]\n\n  @@map(\"santri\")\n}\n\nmodel User {\n  id_user  Int      @id @default(autoincrement())\n  username String   @unique\n  email    String   @unique\n  password String\n  role     String   @default(\"muhafiz\")\n  halaqah  Halaqah?\n\n  deleted_at DateTime?\n\n  @@map(\"user\")\n}\n\n// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../../src/generated\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n"
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id_user\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"username\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"deleted_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":\"user\"}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"Halaqah\":{\"fields\":[{\"name\":\"id_halaqah\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name_halaqah\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"muhafiz_id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"muhafiz\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"HalaqahToUser\"},{\"name\":\"santri\",\"kind\":\"object\",\"type\":\"Santri\",\"relationName\":\"HalaqahToSantri\"},{\"name\":\"deleted_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":\"halaqah\"},\"Santri\":{\"fields\":[{\"name\":\"id_santri\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"nama_santri\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"target\",\"kind\":\"enum\",\"type\":\"KategoriTarget\"},{\"name\":\"halaqah_id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"halaqah\",\"kind\":\"object\",\"type\":\"Halaqah\",\"relationName\":\"HalaqahToSantri\"}],\"dbName\":\"santri\"},\"User\":{\"fields\":[{\"name\":\"id_user\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"username\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"halaqah\",\"kind\":\"object\",\"type\":\"Halaqah\",\"relationName\":\"HalaqahToUser\"},{\"name\":\"deleted_at\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":\"user\"}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.compilerWasm = {
   getRuntime: async () => require('./query_compiler_bg.js'),

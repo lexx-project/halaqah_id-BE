@@ -25,14 +25,14 @@ router.get(
   "/muhafiz",
   authMiddleware,
   roleMiddleware(["superadmin"]),
-  authController.getAllMuhafidz
+  authController.getAllmuhafiz
 );
 
 router.delete(
   "/muhafiz/:id",
   authMiddleware,
   roleMiddleware(["superadmin"]),
-  authController.deleteMuhafidz
+  authController.deletemuhafiz
 );
 
 router.patch(

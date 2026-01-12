@@ -41,3 +41,10 @@ export const updateMuhafiz = asyncHandler(
     return successResponse(res, "Data muhafidz berhasil diupdate", result);
   }
 );
+
+export const impersonate = asyncHandler(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const result = await authService.impersonateMuhafiz(Number(id));
+
+  return successResponse(res, "Impersonate berhasil", result);
+});

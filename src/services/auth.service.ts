@@ -105,3 +105,28 @@ export const updateMuhafiz = async (
   }
   return await userRepo.updateUser(id, data);
 };
+
+export const impersonateMuhafiz = async (muhafizId: number) => {
+  const user = await prisma.user.findUnique({ where: { id_user: muhafizId } });
+
+  if (!user || user.deleted_at || user.role !== "muhafiz") {
+    const error: any = new Error(
+      "Muhafiz tidak ditemukan atau bukan merupakan muhafiz"
+    );
+    error.status = 404;
+    throw error;
+  }
+
+  const jwtSecret = process.env.JWT_SECRET;
+  if (!jwtSecret) {
+    throw new Error("JWT_SECRET is missing");
+  }
+
+  const token = jwt.sign({ id: user.id_user, role: user.role }, jwtSecret, {
+    expiresIn: "7d",
+  });
+
+  const { password: _, ...userResponse } = user;
+
+  return { user: userResponse, token };
+};

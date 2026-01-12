@@ -42,4 +42,11 @@ router.patch(
   authController.updateMuhafiz
 );
 
+router.post(
+  "/impersonate/:id",
+  authMiddleware,
+  roleMiddleware(["superadmin"]),
+  authController.impersonate
+);
+
 export default router;

@@ -13,3 +13,5 @@ router.patch("/:id", halaqahController.updateHalaqah);
 router.delete("/:id", halaqahController.deleteHalaqah);
 router.get("/deleted", halaqahController.listDeletedHalaqah);
 router.patch("/restore/:id", halaqahController.restoreHalaqah);
+
+export default router;

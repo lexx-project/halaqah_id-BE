@@ -17,8 +17,8 @@ export const login = async (data: any) => {
         {
           username: data.username,
         },
-        { deleted_at: null },
       ],
+      deleted_at: null,
     },
   });
 

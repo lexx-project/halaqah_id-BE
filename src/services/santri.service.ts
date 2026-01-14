@@ -1,15 +1,12 @@
 import prisma from "../prisma";
 import * as santriRepo from "../repositories/santri.repository";
 
-export const getSantriList = async (user: {
-  id_user: number;
-  role: string;
-}) => {
+export const getSantriList = async (user: { id: number; role: string }) => {
   let halaqahId: number | undefined;
 
   if (user.role === "muhafiz") {
     const halaqah = await prisma.halaqah.findFirst({
-      where: { muhafiz_id: user.id_user },
+      where: { muhafiz_id: user.id },
     });
 
     if (!halaqah) throw new Error("Anda belum memiliki halaqah");
@@ -21,7 +18,7 @@ export const getSantriList = async (user: {
 
 export const createNewSantri = async (
   user: {
-    id_user: number;
+    id: number;
     role: string;
   },
   data: {
@@ -36,7 +33,7 @@ export const createNewSantri = async (
   if (user.role === "muhafiz") {
     const halaqah = await prisma.halaqah.findFirst({
       where: {
-        muhafiz_id: user.id_user,
+        muhafiz_id: user.id,
         deleted_at: null,
       },
     });
@@ -49,7 +46,7 @@ export const createNewSantri = async (
 
 export const updateExistingSantri = async (
   id: number,
-  user: { id_user: number; role: string },
+  user: { id: number; role: string },
   data: any
 ) => {
   const santri = await santriRepo.getSantriById(id);
@@ -57,7 +54,7 @@ export const updateExistingSantri = async (
 
   if (user.role === "muhafiz") {
     const halaqah = await prisma.halaqah.findFirst({
-      where: { muhafiz_id: user.id_user },
+      where: { muhafiz_id: user.id },
     });
 
     if (santri.halaqah_id !== halaqah?.id_halaqah) {
@@ -75,14 +72,14 @@ export const updateExistingSantri = async (
 
 export const deleteSantri = async (
   id: number,
-  user: { id_user: number; role: string }
+  user: { id: number; role: string }
 ) => {
   const santri = await santriRepo.getSantriById(id);
   if (!santri) throw new Error("Santri tidak ditemukan!!");
 
   if (user.role === "muhafiz") {
     const halaqah = await prisma.halaqah.findFirst({
-      where: { muhafiz_id: user.id_user },
+      where: { muhafiz_id: user.id },
     });
     if (santri.halaqah_id !== halaqah?.id_halaqah) {
       const error: any = new Error(

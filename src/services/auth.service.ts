@@ -131,3 +131,33 @@ export const impersonateMuhafiz = async (muhafizId: number) => {
 
   return { user: userResponse, token };
 };
+
+export const getDeletedMuhafiz = async () => {
+  return await userRepo.findAllDeletedMuhafiz();
+};
+
+export const restoreMuhafizAccount = async (id: number) => {
+  const user = await prisma.user.findUnique({
+    where: { id_user: id },
+  });
+
+  if (!user) {
+    const error: any = new Error("User tidak ditemukan");
+    error.status = 404;
+    throw error;
+  }
+
+  if (user.role !== "muhafiz") {
+    const error: any = new Error("User tersebut bukan merupakan muhafiz");
+    error.status = 400;
+    throw error;
+  }
+
+  if (user.deleted_at === null) {
+    const error: any = new Error("User ini sudah dalam status aktif");
+    error.status = 400;
+    throw error;
+  }
+
+  return await userRepo.restoreUser(id);
+};

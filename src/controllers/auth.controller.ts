@@ -48,3 +48,26 @@ export const impersonate = asyncHandler(async (req: Request, res: Response) => {
 
   return successResponse(res, "Impersonate berhasil", result);
 });
+
+export const listDeletedMuhafiz = asyncHandler(
+  async (_req: Request, res: Response) => {
+    const result = await authService.getDeletedMuhafiz();
+    return successResponse(
+      res,
+      "Daftar muhafiz terhapus berhasil diambil",
+      result
+    );
+  }
+);
+
+export const restoreMuhafiz = asyncHandler(
+  async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const result = await authService.restoreMuhafizAccount(Number(id));
+    return successResponse(
+      res,
+      "Akun muhafiz berhasil diaktifkan kembali",
+      result
+    );
+  }
+);

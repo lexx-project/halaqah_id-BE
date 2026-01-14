@@ -65,3 +65,37 @@ export const updateUser = async (id: number, data: any) => {
     },
   });
 };
+
+export const findAllDeletedMuhafiz = async () => {
+  return await prisma.user.findMany({
+    where: {
+      role: "muhafiz",
+      NOT: {
+        deleted_at: null,
+      },
+    },
+    select: {
+      id_user: true,
+      username: true,
+      email: true,
+      deleted_at: true,
+    },
+  });
+};
+
+export const restoreUser = async (id: number) => {
+  return await prisma.user.update({
+    where: {
+      id_user: id,
+    },
+    data: {
+      deleted_at: null,
+    },
+    select: {
+      id_user: true,
+      username: true,
+      email: true,
+      role: true,
+    },
+  });
+};

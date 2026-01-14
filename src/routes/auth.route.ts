@@ -49,4 +49,18 @@ router.post(
   authController.impersonate
 );
 
+router.get(
+  "/muhafiz/deleted",
+  authMiddleware,
+  roleMiddleware(["superadmin"]),
+  authController.listDeletedMuhafiz
+);
+
+router.patch(
+  "/muhafiz/restore/:id",
+  authMiddleware,
+  roleMiddleware(["superadmin"]),
+  authController.restoreMuhafiz
+);
+
 export default router;

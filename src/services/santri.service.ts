@@ -9,17 +9,14 @@ export const getSantriList = async (user: {
 
   if (user.role === "muhafiz") {
     const halaqah = await prisma.halaqah.findFirst({
-      where: {
-        muhafiz_id: user.id_user,
-        deleted_at: null,
-      },
+      where: { muhafiz_id: user.id_user },
     });
-    if (!halaqah) {
-      throw new Error("Anda tidak ditugaskan ke halaqah manapun");
-    }
+
+    if (!halaqah) throw new Error("Anda belum memiliki halaqah");
     halaqahId = halaqah.id_halaqah;
   }
-  return await santriRepo.getAllSantri();
+
+  return await santriRepo.getAllSantri(halaqahId);
 };
 
 export const createNewSantri = async (
@@ -60,15 +57,19 @@ export const updateExistingSantri = async (
 
   if (user.role === "muhafiz") {
     const halaqah = await prisma.halaqah.findFirst({
-      where: {
-        muhafiz_id: user.id_user,
-      },
+      where: { muhafiz_id: user.id_user },
     });
+
     if (santri.halaqah_id !== halaqah?.id_halaqah) {
-      throw new Error("Akses ditolak: Santri ini bukan anggota halaqah Anda!");
+      const error: any = new Error(
+        "Akses ditolak: Santri ini bukan anggota halaqah Anda!"
+      );
+      error.statusCode = 403;
+      throw error;
     }
     delete data.halaqah_id;
   }
+
   return await santriRepo.updateSantri(id, data);
 };
 
@@ -84,26 +85,18 @@ export const deleteSantri = async (
       where: { muhafiz_id: user.id_user },
     });
     if (santri.halaqah_id !== halaqah?.id_halaqah) {
-      throw new Error("Akses ditolak: Santri ini bukan anggota halaqah Anda!");
+      const error: any = new Error(
+        "Akses ditolak: Santri ini bukan anggota halaqah Anda!"
+      );
+      error.statusCode = 403;
+      throw error;
     }
   }
   return await santriRepo.deleteSantri(id);
 };
 
-export const restoreSantri = async (
-  id: number,
-  user: { id_user: number; role: string }
-) => {
-  const santri = await santriRepo.getSantriById(id);
-  if (!santri) throw new Error("Santri tidak ditemukan!!");
-
-  if (user.role === "muhafiz") {
-    const halaqah = await prisma.halaqah.findFirst({
-      where: { muhafiz_id: user.id_user },
-    });
-    if (santri.halaqah_id !== halaqah?.id_halaqah) {
-      throw new Error("Akses ditolak: Santri ini bukan anggota halaqah Anda!");
-    }
-  }
+export const restoreSantriAccount = async (id: number) => {
+  const santri = await santriRepo.getDeletedSantriById(id);
+  if (!santri) throw new Error("Santri tidak ditemukan di tempat sampah!!");
   return await santriRepo.restoreSantri(id);
 };

@@ -39,10 +39,10 @@ export const deleteSantri = asyncHandler(async (req: any, res: Response) => {
   return successResponse(res, "Santri berhasil dihapus", result);
 });
 
-export const restoreSantri = asyncHandler(async (req: any, res: Response) => {
-  const { id } = req.params;
-  const user = req.user;
-
-  const result = await santriService.restoreSantri(Number(id), user);
-  return successResponse(res, "Santri berhasil dihapus", result);
-});
+export const restoreSantri = asyncHandler(
+  async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const result = await santriService.restoreSantriAccount(Number(id));
+    return successResponse(res, "Santri berhasil di-restore", result);
+  }
+);

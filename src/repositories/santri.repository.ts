@@ -9,14 +9,13 @@ export const createSantri = async (data: {
   return await prisma.santri.create({ data });
 };
 
-export const getAllSantri = async () => {
+export const getAllSantri = async (halaqahId?: number) => {
   return await prisma.santri.findMany({
     where: {
       deleted_at: null,
+      ...(halaqahId ? { halaqah_id: halaqahId } : {}),
     },
-    include: {
-      halaqah: true,
-    },
+    include: { halaqah: true },
   });
 };
 
@@ -64,6 +63,15 @@ export const restoreSantri = async (id: number) => {
     },
     data: {
       deleted_at: null,
+    },
+  });
+};
+
+export const getDeletedSantriById = async (id: number) => {
+  return await prisma.santri.findFirst({
+    where: {
+      id_santri: id,
+      NOT: { deleted_at: null },
     },
   });
 };

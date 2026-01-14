@@ -36,8 +36,7 @@ export namespace $Enums {
   export const KategoriTarget: {
   RINGAN: 'RINGAN',
   SEDANG: 'SEDANG',
-  INTENSE: 'INTENSE',
-  KHUSUS: 'KHUSUS'
+  INTENSE: 'INTENSE'
 };
 
 export type KategoriTarget = (typeof KategoriTarget)[keyof typeof KategoriTarget]
@@ -2231,22 +2230,28 @@ export namespace Prisma {
   export type SantriMinAggregateOutputType = {
     id_santri: number | null
     nama_santri: string | null
+    nomor_telepon: string | null
     target: $Enums.KategoriTarget | null
     halaqah_id: number | null
+    deleted_at: Date | null
   }
 
   export type SantriMaxAggregateOutputType = {
     id_santri: number | null
     nama_santri: string | null
+    nomor_telepon: string | null
     target: $Enums.KategoriTarget | null
     halaqah_id: number | null
+    deleted_at: Date | null
   }
 
   export type SantriCountAggregateOutputType = {
     id_santri: number
     nama_santri: number
+    nomor_telepon: number
     target: number
     halaqah_id: number
+    deleted_at: number
     _all: number
   }
 
@@ -2264,22 +2269,28 @@ export namespace Prisma {
   export type SantriMinAggregateInputType = {
     id_santri?: true
     nama_santri?: true
+    nomor_telepon?: true
     target?: true
     halaqah_id?: true
+    deleted_at?: true
   }
 
   export type SantriMaxAggregateInputType = {
     id_santri?: true
     nama_santri?: true
+    nomor_telepon?: true
     target?: true
     halaqah_id?: true
+    deleted_at?: true
   }
 
   export type SantriCountAggregateInputType = {
     id_santri?: true
     nama_santri?: true
+    nomor_telepon?: true
     target?: true
     halaqah_id?: true
+    deleted_at?: true
     _all?: true
   }
 
@@ -2372,8 +2383,10 @@ export namespace Prisma {
   export type SantriGroupByOutputType = {
     id_santri: number
     nama_santri: string
+    nomor_telepon: string | null
     target: $Enums.KategoriTarget
     halaqah_id: number
+    deleted_at: Date | null
     _count: SantriCountAggregateOutputType | null
     _avg: SantriAvgAggregateOutputType | null
     _sum: SantriSumAggregateOutputType | null
@@ -2398,35 +2411,43 @@ export namespace Prisma {
   export type SantriSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id_santri?: boolean
     nama_santri?: boolean
+    nomor_telepon?: boolean
     target?: boolean
     halaqah_id?: boolean
+    deleted_at?: boolean
     halaqah?: boolean | HalaqahDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["santri"]>
 
   export type SantriSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id_santri?: boolean
     nama_santri?: boolean
+    nomor_telepon?: boolean
     target?: boolean
     halaqah_id?: boolean
+    deleted_at?: boolean
     halaqah?: boolean | HalaqahDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["santri"]>
 
   export type SantriSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id_santri?: boolean
     nama_santri?: boolean
+    nomor_telepon?: boolean
     target?: boolean
     halaqah_id?: boolean
+    deleted_at?: boolean
     halaqah?: boolean | HalaqahDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["santri"]>
 
   export type SantriSelectScalar = {
     id_santri?: boolean
     nama_santri?: boolean
+    nomor_telepon?: boolean
     target?: boolean
     halaqah_id?: boolean
+    deleted_at?: boolean
   }
 
-  export type SantriOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id_santri" | "nama_santri" | "target" | "halaqah_id", ExtArgs["result"]["santri"]>
+  export type SantriOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id_santri" | "nama_santri" | "nomor_telepon" | "target" | "halaqah_id" | "deleted_at", ExtArgs["result"]["santri"]>
   export type SantriInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     halaqah?: boolean | HalaqahDefaultArgs<ExtArgs>
   }
@@ -2445,8 +2466,10 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id_santri: number
       nama_santri: string
+      nomor_telepon: string | null
       target: $Enums.KategoriTarget
       halaqah_id: number
+      deleted_at: Date | null
     }, ExtArgs["result"]["santri"]>
     composites: {}
   }
@@ -2873,8 +2896,10 @@ export namespace Prisma {
   interface SantriFieldRefs {
     readonly id_santri: FieldRef<"Santri", 'Int'>
     readonly nama_santri: FieldRef<"Santri", 'String'>
+    readonly nomor_telepon: FieldRef<"Santri", 'String'>
     readonly target: FieldRef<"Santri", 'KategoriTarget'>
     readonly halaqah_id: FieldRef<"Santri", 'Int'>
+    readonly deleted_at: FieldRef<"Santri", 'DateTime'>
   }
     
 
@@ -4426,8 +4451,10 @@ export namespace Prisma {
   export const SantriScalarFieldEnum: {
     id_santri: 'id_santri',
     nama_santri: 'nama_santri',
+    nomor_telepon: 'nomor_telepon',
     target: 'target',
-    halaqah_id: 'halaqah_id'
+    halaqah_id: 'halaqah_id',
+    deleted_at: 'deleted_at'
   };
 
   export type SantriScalarFieldEnum = (typeof SantriScalarFieldEnum)[keyof typeof SantriScalarFieldEnum]
@@ -4608,16 +4635,20 @@ export namespace Prisma {
     NOT?: SantriWhereInput | SantriWhereInput[]
     id_santri?: IntFilter<"Santri"> | number
     nama_santri?: StringFilter<"Santri"> | string
+    nomor_telepon?: StringNullableFilter<"Santri"> | string | null
     target?: EnumKategoriTargetFilter<"Santri"> | $Enums.KategoriTarget
     halaqah_id?: IntFilter<"Santri"> | number
+    deleted_at?: DateTimeNullableFilter<"Santri"> | Date | string | null
     halaqah?: XOR<HalaqahScalarRelationFilter, HalaqahWhereInput>
   }
 
   export type SantriOrderByWithRelationInput = {
     id_santri?: SortOrder
     nama_santri?: SortOrder
+    nomor_telepon?: SortOrderInput | SortOrder
     target?: SortOrder
     halaqah_id?: SortOrder
+    deleted_at?: SortOrderInput | SortOrder
     halaqah?: HalaqahOrderByWithRelationInput
   }
 
@@ -4627,16 +4658,20 @@ export namespace Prisma {
     OR?: SantriWhereInput[]
     NOT?: SantriWhereInput | SantriWhereInput[]
     nama_santri?: StringFilter<"Santri"> | string
+    nomor_telepon?: StringNullableFilter<"Santri"> | string | null
     target?: EnumKategoriTargetFilter<"Santri"> | $Enums.KategoriTarget
     halaqah_id?: IntFilter<"Santri"> | number
+    deleted_at?: DateTimeNullableFilter<"Santri"> | Date | string | null
     halaqah?: XOR<HalaqahScalarRelationFilter, HalaqahWhereInput>
   }, "id_santri">
 
   export type SantriOrderByWithAggregationInput = {
     id_santri?: SortOrder
     nama_santri?: SortOrder
+    nomor_telepon?: SortOrderInput | SortOrder
     target?: SortOrder
     halaqah_id?: SortOrder
+    deleted_at?: SortOrderInput | SortOrder
     _count?: SantriCountOrderByAggregateInput
     _avg?: SantriAvgOrderByAggregateInput
     _max?: SantriMaxOrderByAggregateInput
@@ -4650,8 +4685,10 @@ export namespace Prisma {
     NOT?: SantriScalarWhereWithAggregatesInput | SantriScalarWhereWithAggregatesInput[]
     id_santri?: IntWithAggregatesFilter<"Santri"> | number
     nama_santri?: StringWithAggregatesFilter<"Santri"> | string
+    nomor_telepon?: StringNullableWithAggregatesFilter<"Santri"> | string | null
     target?: EnumKategoriTargetWithAggregatesFilter<"Santri"> | $Enums.KategoriTarget
     halaqah_id?: IntWithAggregatesFilter<"Santri"> | number
+    deleted_at?: DateTimeNullableWithAggregatesFilter<"Santri"> | Date | string | null
   }
 
   export type UserWhereInput = {
@@ -4767,47 +4804,61 @@ export namespace Prisma {
 
   export type SantriCreateInput = {
     nama_santri: string
+    nomor_telepon?: string | null
     target?: $Enums.KategoriTarget
+    deleted_at?: Date | string | null
     halaqah: HalaqahCreateNestedOneWithoutSantriInput
   }
 
   export type SantriUncheckedCreateInput = {
     id_santri?: number
     nama_santri: string
+    nomor_telepon?: string | null
     target?: $Enums.KategoriTarget
     halaqah_id: number
+    deleted_at?: Date | string | null
   }
 
   export type SantriUpdateInput = {
     nama_santri?: StringFieldUpdateOperationsInput | string
+    nomor_telepon?: NullableStringFieldUpdateOperationsInput | string | null
     target?: EnumKategoriTargetFieldUpdateOperationsInput | $Enums.KategoriTarget
+    deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     halaqah?: HalaqahUpdateOneRequiredWithoutSantriNestedInput
   }
 
   export type SantriUncheckedUpdateInput = {
     id_santri?: IntFieldUpdateOperationsInput | number
     nama_santri?: StringFieldUpdateOperationsInput | string
+    nomor_telepon?: NullableStringFieldUpdateOperationsInput | string | null
     target?: EnumKategoriTargetFieldUpdateOperationsInput | $Enums.KategoriTarget
     halaqah_id?: IntFieldUpdateOperationsInput | number
+    deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type SantriCreateManyInput = {
     id_santri?: number
     nama_santri: string
+    nomor_telepon?: string | null
     target?: $Enums.KategoriTarget
     halaqah_id: number
+    deleted_at?: Date | string | null
   }
 
   export type SantriUpdateManyMutationInput = {
     nama_santri?: StringFieldUpdateOperationsInput | string
+    nomor_telepon?: NullableStringFieldUpdateOperationsInput | string | null
     target?: EnumKategoriTargetFieldUpdateOperationsInput | $Enums.KategoriTarget
+    deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type SantriUncheckedUpdateManyInput = {
     id_santri?: IntFieldUpdateOperationsInput | number
     nama_santri?: StringFieldUpdateOperationsInput | string
+    nomor_telepon?: NullableStringFieldUpdateOperationsInput | string | null
     target?: EnumKategoriTargetFieldUpdateOperationsInput | $Enums.KategoriTarget
     halaqah_id?: IntFieldUpdateOperationsInput | number
+    deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type UserCreateInput = {
@@ -5010,6 +5061,21 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type EnumKategoriTargetFilter<$PrismaModel = never> = {
     equals?: $Enums.KategoriTarget | EnumKategoriTargetFieldRefInput<$PrismaModel>
     in?: $Enums.KategoriTarget[] | ListEnumKategoriTargetFieldRefInput<$PrismaModel>
@@ -5025,8 +5091,10 @@ export namespace Prisma {
   export type SantriCountOrderByAggregateInput = {
     id_santri?: SortOrder
     nama_santri?: SortOrder
+    nomor_telepon?: SortOrder
     target?: SortOrder
     halaqah_id?: SortOrder
+    deleted_at?: SortOrder
   }
 
   export type SantriAvgOrderByAggregateInput = {
@@ -5037,20 +5105,42 @@ export namespace Prisma {
   export type SantriMaxOrderByAggregateInput = {
     id_santri?: SortOrder
     nama_santri?: SortOrder
+    nomor_telepon?: SortOrder
     target?: SortOrder
     halaqah_id?: SortOrder
+    deleted_at?: SortOrder
   }
 
   export type SantriMinOrderByAggregateInput = {
     id_santri?: SortOrder
     nama_santri?: SortOrder
+    nomor_telepon?: SortOrder
     target?: SortOrder
     halaqah_id?: SortOrder
+    deleted_at?: SortOrder
   }
 
   export type SantriSumOrderByAggregateInput = {
     id_santri?: SortOrder
     halaqah_id?: SortOrder
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type EnumKategoriTargetWithAggregatesFilter<$PrismaModel = never> = {
@@ -5179,6 +5269,10 @@ export namespace Prisma {
     create?: XOR<HalaqahCreateWithoutSantriInput, HalaqahUncheckedCreateWithoutSantriInput>
     connectOrCreate?: HalaqahCreateOrConnectWithoutSantriInput
     connect?: HalaqahWhereUniqueInput
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type EnumKategoriTargetFieldUpdateOperationsInput = {
@@ -5330,11 +5424,42 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type NestedEnumKategoriTargetFilter<$PrismaModel = never> = {
     equals?: $Enums.KategoriTarget | EnumKategoriTargetFieldRefInput<$PrismaModel>
     in?: $Enums.KategoriTarget[] | ListEnumKategoriTargetFieldRefInput<$PrismaModel>
     notIn?: $Enums.KategoriTarget[] | ListEnumKategoriTargetFieldRefInput<$PrismaModel>
     not?: NestedEnumKategoriTargetFilter<$PrismaModel> | $Enums.KategoriTarget
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type NestedEnumKategoriTargetWithAggregatesFilter<$PrismaModel = never> = {
@@ -5371,13 +5496,17 @@ export namespace Prisma {
 
   export type SantriCreateWithoutHalaqahInput = {
     nama_santri: string
+    nomor_telepon?: string | null
     target?: $Enums.KategoriTarget
+    deleted_at?: Date | string | null
   }
 
   export type SantriUncheckedCreateWithoutHalaqahInput = {
     id_santri?: number
     nama_santri: string
+    nomor_telepon?: string | null
     target?: $Enums.KategoriTarget
+    deleted_at?: Date | string | null
   }
 
   export type SantriCreateOrConnectWithoutHalaqahInput = {
@@ -5440,8 +5569,10 @@ export namespace Prisma {
     NOT?: SantriScalarWhereInput | SantriScalarWhereInput[]
     id_santri?: IntFilter<"Santri"> | number
     nama_santri?: StringFilter<"Santri"> | string
+    nomor_telepon?: StringNullableFilter<"Santri"> | string | null
     target?: EnumKategoriTargetFilter<"Santri"> | $Enums.KategoriTarget
     halaqah_id?: IntFilter<"Santri"> | number
+    deleted_at?: DateTimeNullableFilter<"Santri"> | Date | string | null
   }
 
   export type HalaqahCreateWithoutSantriInput = {
@@ -5531,24 +5662,32 @@ export namespace Prisma {
   export type SantriCreateManyHalaqahInput = {
     id_santri?: number
     nama_santri: string
+    nomor_telepon?: string | null
     target?: $Enums.KategoriTarget
+    deleted_at?: Date | string | null
   }
 
   export type SantriUpdateWithoutHalaqahInput = {
     nama_santri?: StringFieldUpdateOperationsInput | string
+    nomor_telepon?: NullableStringFieldUpdateOperationsInput | string | null
     target?: EnumKategoriTargetFieldUpdateOperationsInput | $Enums.KategoriTarget
+    deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type SantriUncheckedUpdateWithoutHalaqahInput = {
     id_santri?: IntFieldUpdateOperationsInput | number
     nama_santri?: StringFieldUpdateOperationsInput | string
+    nomor_telepon?: NullableStringFieldUpdateOperationsInput | string | null
     target?: EnumKategoriTargetFieldUpdateOperationsInput | $Enums.KategoriTarget
+    deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type SantriUncheckedUpdateManyWithoutHalaqahInput = {
     id_santri?: IntFieldUpdateOperationsInput | number
     nama_santri?: StringFieldUpdateOperationsInput | string
+    nomor_telepon?: NullableStringFieldUpdateOperationsInput | string | null
     target?: EnumKategoriTargetFieldUpdateOperationsInput | $Enums.KategoriTarget
+    deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
 

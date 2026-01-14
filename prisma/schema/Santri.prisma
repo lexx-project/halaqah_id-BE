@@ -2,12 +2,12 @@ enum KategoriTarget {
     RINGAN
     SEDANG
     INTENSE
-    KHUSUS
 }
 
 model Santri {
     id_santri Int @id @default(autoincrement())
     nama_santri String
+    nomor_telepon String?
     target KategoriTarget @default(RINGAN)
 
     halaqah_id Int
@@ -16,5 +16,6 @@ model Santri {
 // absensi Absensi[]
 // setoran Setoran[]
 
+deleted_at DateTime?
     @@map("santri")
 }

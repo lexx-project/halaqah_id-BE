@@ -5,6 +5,15 @@ export const inputSetoran = async (
   user: { id: number; role: string },
   data: any
 ) => {
+  const validKategori = ["HAFALAN", "MURAJAAH"];
+  if (data.kategori && !validKategori.includes(data.kategori)) {
+    const error: any = new Error(
+      `Kategori harus salah satu dari: ${validKategori.join(", ")}`
+    );
+    error.status = 400;
+    throw error;
+  }
+
   const santri = await prisma.santri.findUnique({
     where: {
       id_santri: data.santri_id,
@@ -22,10 +31,11 @@ export const inputSetoran = async (
       },
     });
     if (!halaqahMuhafiz || santri.halaqah_id !== halaqahMuhafiz.id_halaqah) {
-      throw {
-        status: 403,
-        message: "Akses ditolak: Santri ini bukan anggota halaqah Anda!",
-      };
+      const error: any = new Error(
+        "Akses ditolak: Santri ini bukan anggota halaqah Anda!"
+      );
+      error.status = 403;
+      throw error;
     }
   }
   return await setoranRepo.createSetoran(data);

@@ -22,7 +22,12 @@ export const inputSetoran = async (
       halaqah: true,
     },
   });
-  if (!santri) throw new Error("Santri tidak ditemukan");
+
+  if (!santri) {
+    const error: any = new Error("Santri tidak ditemukan");
+    error.status = 404;
+    throw error;
+  }
 
   if (user.role === "muhafiz") {
     const halaqahMuhafiz = await prisma.halaqah.findFirst({

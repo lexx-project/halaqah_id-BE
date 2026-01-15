@@ -24,6 +24,11 @@ export type Halaqah = $Result.DefaultSelection<Prisma.$HalaqahPayload>
  */
 export type Santri = $Result.DefaultSelection<Prisma.$SantriPayload>
 /**
+ * Model Setoran
+ * 
+ */
+export type Setoran = $Result.DefaultSelection<Prisma.$SetoranPayload>
+/**
  * Model User
  * 
  */
@@ -41,11 +46,23 @@ export namespace $Enums {
 
 export type KategoriTarget = (typeof KategoriTarget)[keyof typeof KategoriTarget]
 
+
+export const KategoriSetoran: {
+  HAFALAN: 'HAFALAN',
+  MURAJAAH: 'MURAJAAH'
+};
+
+export type KategoriSetoran = (typeof KategoriSetoran)[keyof typeof KategoriSetoran]
+
 }
 
 export type KategoriTarget = $Enums.KategoriTarget
 
 export const KategoriTarget: typeof $Enums.KategoriTarget
+
+export type KategoriSetoran = $Enums.KategoriSetoran
+
+export const KategoriSetoran: typeof $Enums.KategoriSetoran
 
 /**
  * ##  Prisma Client ʲˢ
@@ -183,6 +200,16 @@ export class PrismaClient<
     * ```
     */
   get santri(): Prisma.SantriDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.setoran`: Exposes CRUD operations for the **Setoran** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Setorans
+    * const setorans = await prisma.setoran.findMany()
+    * ```
+    */
+  get setoran(): Prisma.SetoranDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.user`: Exposes CRUD operations for the **User** model.
@@ -629,6 +656,7 @@ export namespace Prisma {
   export const ModelName: {
     Halaqah: 'Halaqah',
     Santri: 'Santri',
+    Setoran: 'Setoran',
     User: 'User'
   };
 
@@ -645,7 +673,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "halaqah" | "santri" | "user"
+      modelProps: "halaqah" | "santri" | "setoran" | "user"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -794,6 +822,80 @@ export namespace Prisma {
           count: {
             args: Prisma.SantriCountArgs<ExtArgs>
             result: $Utils.Optional<SantriCountAggregateOutputType> | number
+          }
+        }
+      }
+      Setoran: {
+        payload: Prisma.$SetoranPayload<ExtArgs>
+        fields: Prisma.SetoranFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SetoranFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SetoranPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SetoranFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SetoranPayload>
+          }
+          findFirst: {
+            args: Prisma.SetoranFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SetoranPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SetoranFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SetoranPayload>
+          }
+          findMany: {
+            args: Prisma.SetoranFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SetoranPayload>[]
+          }
+          create: {
+            args: Prisma.SetoranCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SetoranPayload>
+          }
+          createMany: {
+            args: Prisma.SetoranCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SetoranCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SetoranPayload>[]
+          }
+          delete: {
+            args: Prisma.SetoranDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SetoranPayload>
+          }
+          update: {
+            args: Prisma.SetoranUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SetoranPayload>
+          }
+          deleteMany: {
+            args: Prisma.SetoranDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SetoranUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SetoranUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SetoranPayload>[]
+          }
+          upsert: {
+            args: Prisma.SetoranUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SetoranPayload>
+          }
+          aggregate: {
+            args: Prisma.SetoranAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSetoran>
+          }
+          groupBy: {
+            args: Prisma.SetoranGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SetoranGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SetoranCountArgs<ExtArgs>
+            result: $Utils.Optional<SetoranCountAggregateOutputType> | number
           }
         }
       }
@@ -981,6 +1083,7 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     halaqah?: HalaqahOmit
     santri?: SantriOmit
+    setoran?: SetoranOmit
     user?: UserOmit
   }
 
@@ -1085,6 +1188,37 @@ export namespace Prisma {
    */
   export type HalaqahCountOutputTypeCountSantriArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SantriWhereInput
+  }
+
+
+  /**
+   * Count Type SantriCountOutputType
+   */
+
+  export type SantriCountOutputType = {
+    setoran: number
+  }
+
+  export type SantriCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    setoran?: boolean | SantriCountOutputTypeCountSetoranArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * SantriCountOutputType without action
+   */
+  export type SantriCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SantriCountOutputType
+     */
+    select?: SantriCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * SantriCountOutputType without action
+   */
+  export type SantriCountOutputTypeCountSetoranArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SetoranWhereInput
   }
 
 
@@ -2416,6 +2550,8 @@ export namespace Prisma {
     halaqah_id?: boolean
     deleted_at?: boolean
     halaqah?: boolean | HalaqahDefaultArgs<ExtArgs>
+    setoran?: boolean | Santri$setoranArgs<ExtArgs>
+    _count?: boolean | SantriCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["santri"]>
 
   export type SantriSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2450,6 +2586,8 @@ export namespace Prisma {
   export type SantriOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id_santri" | "nama_santri" | "nomor_telepon" | "target" | "halaqah_id" | "deleted_at", ExtArgs["result"]["santri"]>
   export type SantriInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     halaqah?: boolean | HalaqahDefaultArgs<ExtArgs>
+    setoran?: boolean | Santri$setoranArgs<ExtArgs>
+    _count?: boolean | SantriCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type SantriIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     halaqah?: boolean | HalaqahDefaultArgs<ExtArgs>
@@ -2462,6 +2600,7 @@ export namespace Prisma {
     name: "Santri"
     objects: {
       halaqah: Prisma.$HalaqahPayload<ExtArgs>
+      setoran: Prisma.$SetoranPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id_santri: number
@@ -2865,6 +3004,7 @@ export namespace Prisma {
   export interface Prisma__SantriClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     halaqah<T extends HalaqahDefaultArgs<ExtArgs> = {}>(args?: Subset<T, HalaqahDefaultArgs<ExtArgs>>): Prisma__HalaqahClient<$Result.GetResult<Prisma.$HalaqahPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    setoran<T extends Santri$setoranArgs<ExtArgs> = {}>(args?: Subset<T, Santri$setoranArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SetoranPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3296,6 +3436,30 @@ export namespace Prisma {
   }
 
   /**
+   * Santri.setoran
+   */
+  export type Santri$setoranArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Setoran
+     */
+    select?: SetoranSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Setoran
+     */
+    omit?: SetoranOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SetoranInclude<ExtArgs> | null
+    where?: SetoranWhereInput
+    orderBy?: SetoranOrderByWithRelationInput | SetoranOrderByWithRelationInput[]
+    cursor?: SetoranWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SetoranScalarFieldEnum | SetoranScalarFieldEnum[]
+  }
+
+  /**
    * Santri without action
    */
   export type SantriDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3311,6 +3475,1158 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: SantriInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Setoran
+   */
+
+  export type AggregateSetoran = {
+    _count: SetoranCountAggregateOutputType | null
+    _avg: SetoranAvgAggregateOutputType | null
+    _sum: SetoranSumAggregateOutputType | null
+    _min: SetoranMinAggregateOutputType | null
+    _max: SetoranMaxAggregateOutputType | null
+  }
+
+  export type SetoranAvgAggregateOutputType = {
+    id_setoran: number | null
+    santri_id: number | null
+    juz: number | null
+  }
+
+  export type SetoranSumAggregateOutputType = {
+    id_setoran: number | null
+    santri_id: number | null
+    juz: number | null
+  }
+
+  export type SetoranMinAggregateOutputType = {
+    id_setoran: number | null
+    santri_id: number | null
+    tanggal_setoran: Date | null
+    juz: number | null
+    surat: string | null
+    ayat: string | null
+    kategori: $Enums.KategoriSetoran | null
+    taqwim: string | null
+    keterangan: string | null
+  }
+
+  export type SetoranMaxAggregateOutputType = {
+    id_setoran: number | null
+    santri_id: number | null
+    tanggal_setoran: Date | null
+    juz: number | null
+    surat: string | null
+    ayat: string | null
+    kategori: $Enums.KategoriSetoran | null
+    taqwim: string | null
+    keterangan: string | null
+  }
+
+  export type SetoranCountAggregateOutputType = {
+    id_setoran: number
+    santri_id: number
+    tanggal_setoran: number
+    juz: number
+    surat: number
+    ayat: number
+    kategori: number
+    taqwim: number
+    keterangan: number
+    _all: number
+  }
+
+
+  export type SetoranAvgAggregateInputType = {
+    id_setoran?: true
+    santri_id?: true
+    juz?: true
+  }
+
+  export type SetoranSumAggregateInputType = {
+    id_setoran?: true
+    santri_id?: true
+    juz?: true
+  }
+
+  export type SetoranMinAggregateInputType = {
+    id_setoran?: true
+    santri_id?: true
+    tanggal_setoran?: true
+    juz?: true
+    surat?: true
+    ayat?: true
+    kategori?: true
+    taqwim?: true
+    keterangan?: true
+  }
+
+  export type SetoranMaxAggregateInputType = {
+    id_setoran?: true
+    santri_id?: true
+    tanggal_setoran?: true
+    juz?: true
+    surat?: true
+    ayat?: true
+    kategori?: true
+    taqwim?: true
+    keterangan?: true
+  }
+
+  export type SetoranCountAggregateInputType = {
+    id_setoran?: true
+    santri_id?: true
+    tanggal_setoran?: true
+    juz?: true
+    surat?: true
+    ayat?: true
+    kategori?: true
+    taqwim?: true
+    keterangan?: true
+    _all?: true
+  }
+
+  export type SetoranAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Setoran to aggregate.
+     */
+    where?: SetoranWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Setorans to fetch.
+     */
+    orderBy?: SetoranOrderByWithRelationInput | SetoranOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SetoranWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Setorans from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Setorans.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Setorans
+    **/
+    _count?: true | SetoranCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SetoranAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SetoranSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SetoranMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SetoranMaxAggregateInputType
+  }
+
+  export type GetSetoranAggregateType<T extends SetoranAggregateArgs> = {
+        [P in keyof T & keyof AggregateSetoran]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSetoran[P]>
+      : GetScalarType<T[P], AggregateSetoran[P]>
+  }
+
+
+
+
+  export type SetoranGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SetoranWhereInput
+    orderBy?: SetoranOrderByWithAggregationInput | SetoranOrderByWithAggregationInput[]
+    by: SetoranScalarFieldEnum[] | SetoranScalarFieldEnum
+    having?: SetoranScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SetoranCountAggregateInputType | true
+    _avg?: SetoranAvgAggregateInputType
+    _sum?: SetoranSumAggregateInputType
+    _min?: SetoranMinAggregateInputType
+    _max?: SetoranMaxAggregateInputType
+  }
+
+  export type SetoranGroupByOutputType = {
+    id_setoran: number
+    santri_id: number
+    tanggal_setoran: Date
+    juz: number
+    surat: string
+    ayat: string
+    kategori: $Enums.KategoriSetoran
+    taqwim: string | null
+    keterangan: string | null
+    _count: SetoranCountAggregateOutputType | null
+    _avg: SetoranAvgAggregateOutputType | null
+    _sum: SetoranSumAggregateOutputType | null
+    _min: SetoranMinAggregateOutputType | null
+    _max: SetoranMaxAggregateOutputType | null
+  }
+
+  type GetSetoranGroupByPayload<T extends SetoranGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SetoranGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SetoranGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SetoranGroupByOutputType[P]>
+            : GetScalarType<T[P], SetoranGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SetoranSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_setoran?: boolean
+    santri_id?: boolean
+    tanggal_setoran?: boolean
+    juz?: boolean
+    surat?: boolean
+    ayat?: boolean
+    kategori?: boolean
+    taqwim?: boolean
+    keterangan?: boolean
+    santri?: boolean | SantriDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["setoran"]>
+
+  export type SetoranSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_setoran?: boolean
+    santri_id?: boolean
+    tanggal_setoran?: boolean
+    juz?: boolean
+    surat?: boolean
+    ayat?: boolean
+    kategori?: boolean
+    taqwim?: boolean
+    keterangan?: boolean
+    santri?: boolean | SantriDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["setoran"]>
+
+  export type SetoranSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id_setoran?: boolean
+    santri_id?: boolean
+    tanggal_setoran?: boolean
+    juz?: boolean
+    surat?: boolean
+    ayat?: boolean
+    kategori?: boolean
+    taqwim?: boolean
+    keterangan?: boolean
+    santri?: boolean | SantriDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["setoran"]>
+
+  export type SetoranSelectScalar = {
+    id_setoran?: boolean
+    santri_id?: boolean
+    tanggal_setoran?: boolean
+    juz?: boolean
+    surat?: boolean
+    ayat?: boolean
+    kategori?: boolean
+    taqwim?: boolean
+    keterangan?: boolean
+  }
+
+  export type SetoranOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id_setoran" | "santri_id" | "tanggal_setoran" | "juz" | "surat" | "ayat" | "kategori" | "taqwim" | "keterangan", ExtArgs["result"]["setoran"]>
+  export type SetoranInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    santri?: boolean | SantriDefaultArgs<ExtArgs>
+  }
+  export type SetoranIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    santri?: boolean | SantriDefaultArgs<ExtArgs>
+  }
+  export type SetoranIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    santri?: boolean | SantriDefaultArgs<ExtArgs>
+  }
+
+  export type $SetoranPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Setoran"
+    objects: {
+      santri: Prisma.$SantriPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id_setoran: number
+      santri_id: number
+      tanggal_setoran: Date
+      juz: number
+      surat: string
+      ayat: string
+      kategori: $Enums.KategoriSetoran
+      taqwim: string | null
+      keterangan: string | null
+    }, ExtArgs["result"]["setoran"]>
+    composites: {}
+  }
+
+  type SetoranGetPayload<S extends boolean | null | undefined | SetoranDefaultArgs> = $Result.GetResult<Prisma.$SetoranPayload, S>
+
+  type SetoranCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SetoranFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SetoranCountAggregateInputType | true
+    }
+
+  export interface SetoranDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Setoran'], meta: { name: 'Setoran' } }
+    /**
+     * Find zero or one Setoran that matches the filter.
+     * @param {SetoranFindUniqueArgs} args - Arguments to find a Setoran
+     * @example
+     * // Get one Setoran
+     * const setoran = await prisma.setoran.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SetoranFindUniqueArgs>(args: SelectSubset<T, SetoranFindUniqueArgs<ExtArgs>>): Prisma__SetoranClient<$Result.GetResult<Prisma.$SetoranPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Setoran that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SetoranFindUniqueOrThrowArgs} args - Arguments to find a Setoran
+     * @example
+     * // Get one Setoran
+     * const setoran = await prisma.setoran.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SetoranFindUniqueOrThrowArgs>(args: SelectSubset<T, SetoranFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SetoranClient<$Result.GetResult<Prisma.$SetoranPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Setoran that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SetoranFindFirstArgs} args - Arguments to find a Setoran
+     * @example
+     * // Get one Setoran
+     * const setoran = await prisma.setoran.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SetoranFindFirstArgs>(args?: SelectSubset<T, SetoranFindFirstArgs<ExtArgs>>): Prisma__SetoranClient<$Result.GetResult<Prisma.$SetoranPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Setoran that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SetoranFindFirstOrThrowArgs} args - Arguments to find a Setoran
+     * @example
+     * // Get one Setoran
+     * const setoran = await prisma.setoran.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SetoranFindFirstOrThrowArgs>(args?: SelectSubset<T, SetoranFindFirstOrThrowArgs<ExtArgs>>): Prisma__SetoranClient<$Result.GetResult<Prisma.$SetoranPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Setorans that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SetoranFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Setorans
+     * const setorans = await prisma.setoran.findMany()
+     * 
+     * // Get first 10 Setorans
+     * const setorans = await prisma.setoran.findMany({ take: 10 })
+     * 
+     * // Only select the `id_setoran`
+     * const setoranWithId_setoranOnly = await prisma.setoran.findMany({ select: { id_setoran: true } })
+     * 
+     */
+    findMany<T extends SetoranFindManyArgs>(args?: SelectSubset<T, SetoranFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SetoranPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Setoran.
+     * @param {SetoranCreateArgs} args - Arguments to create a Setoran.
+     * @example
+     * // Create one Setoran
+     * const Setoran = await prisma.setoran.create({
+     *   data: {
+     *     // ... data to create a Setoran
+     *   }
+     * })
+     * 
+     */
+    create<T extends SetoranCreateArgs>(args: SelectSubset<T, SetoranCreateArgs<ExtArgs>>): Prisma__SetoranClient<$Result.GetResult<Prisma.$SetoranPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Setorans.
+     * @param {SetoranCreateManyArgs} args - Arguments to create many Setorans.
+     * @example
+     * // Create many Setorans
+     * const setoran = await prisma.setoran.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SetoranCreateManyArgs>(args?: SelectSubset<T, SetoranCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Setorans and returns the data saved in the database.
+     * @param {SetoranCreateManyAndReturnArgs} args - Arguments to create many Setorans.
+     * @example
+     * // Create many Setorans
+     * const setoran = await prisma.setoran.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Setorans and only return the `id_setoran`
+     * const setoranWithId_setoranOnly = await prisma.setoran.createManyAndReturn({
+     *   select: { id_setoran: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SetoranCreateManyAndReturnArgs>(args?: SelectSubset<T, SetoranCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SetoranPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Setoran.
+     * @param {SetoranDeleteArgs} args - Arguments to delete one Setoran.
+     * @example
+     * // Delete one Setoran
+     * const Setoran = await prisma.setoran.delete({
+     *   where: {
+     *     // ... filter to delete one Setoran
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SetoranDeleteArgs>(args: SelectSubset<T, SetoranDeleteArgs<ExtArgs>>): Prisma__SetoranClient<$Result.GetResult<Prisma.$SetoranPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Setoran.
+     * @param {SetoranUpdateArgs} args - Arguments to update one Setoran.
+     * @example
+     * // Update one Setoran
+     * const setoran = await prisma.setoran.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SetoranUpdateArgs>(args: SelectSubset<T, SetoranUpdateArgs<ExtArgs>>): Prisma__SetoranClient<$Result.GetResult<Prisma.$SetoranPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Setorans.
+     * @param {SetoranDeleteManyArgs} args - Arguments to filter Setorans to delete.
+     * @example
+     * // Delete a few Setorans
+     * const { count } = await prisma.setoran.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SetoranDeleteManyArgs>(args?: SelectSubset<T, SetoranDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Setorans.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SetoranUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Setorans
+     * const setoran = await prisma.setoran.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SetoranUpdateManyArgs>(args: SelectSubset<T, SetoranUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Setorans and returns the data updated in the database.
+     * @param {SetoranUpdateManyAndReturnArgs} args - Arguments to update many Setorans.
+     * @example
+     * // Update many Setorans
+     * const setoran = await prisma.setoran.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Setorans and only return the `id_setoran`
+     * const setoranWithId_setoranOnly = await prisma.setoran.updateManyAndReturn({
+     *   select: { id_setoran: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SetoranUpdateManyAndReturnArgs>(args: SelectSubset<T, SetoranUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SetoranPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Setoran.
+     * @param {SetoranUpsertArgs} args - Arguments to update or create a Setoran.
+     * @example
+     * // Update or create a Setoran
+     * const setoran = await prisma.setoran.upsert({
+     *   create: {
+     *     // ... data to create a Setoran
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Setoran we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SetoranUpsertArgs>(args: SelectSubset<T, SetoranUpsertArgs<ExtArgs>>): Prisma__SetoranClient<$Result.GetResult<Prisma.$SetoranPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Setorans.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SetoranCountArgs} args - Arguments to filter Setorans to count.
+     * @example
+     * // Count the number of Setorans
+     * const count = await prisma.setoran.count({
+     *   where: {
+     *     // ... the filter for the Setorans we want to count
+     *   }
+     * })
+    **/
+    count<T extends SetoranCountArgs>(
+      args?: Subset<T, SetoranCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SetoranCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Setoran.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SetoranAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SetoranAggregateArgs>(args: Subset<T, SetoranAggregateArgs>): Prisma.PrismaPromise<GetSetoranAggregateType<T>>
+
+    /**
+     * Group by Setoran.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SetoranGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SetoranGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SetoranGroupByArgs['orderBy'] }
+        : { orderBy?: SetoranGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SetoranGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSetoranGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Setoran model
+   */
+  readonly fields: SetoranFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Setoran.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SetoranClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    santri<T extends SantriDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SantriDefaultArgs<ExtArgs>>): Prisma__SantriClient<$Result.GetResult<Prisma.$SantriPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Setoran model
+   */
+  interface SetoranFieldRefs {
+    readonly id_setoran: FieldRef<"Setoran", 'Int'>
+    readonly santri_id: FieldRef<"Setoran", 'Int'>
+    readonly tanggal_setoran: FieldRef<"Setoran", 'DateTime'>
+    readonly juz: FieldRef<"Setoran", 'Int'>
+    readonly surat: FieldRef<"Setoran", 'String'>
+    readonly ayat: FieldRef<"Setoran", 'String'>
+    readonly kategori: FieldRef<"Setoran", 'KategoriSetoran'>
+    readonly taqwim: FieldRef<"Setoran", 'String'>
+    readonly keterangan: FieldRef<"Setoran", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Setoran findUnique
+   */
+  export type SetoranFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Setoran
+     */
+    select?: SetoranSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Setoran
+     */
+    omit?: SetoranOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SetoranInclude<ExtArgs> | null
+    /**
+     * Filter, which Setoran to fetch.
+     */
+    where: SetoranWhereUniqueInput
+  }
+
+  /**
+   * Setoran findUniqueOrThrow
+   */
+  export type SetoranFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Setoran
+     */
+    select?: SetoranSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Setoran
+     */
+    omit?: SetoranOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SetoranInclude<ExtArgs> | null
+    /**
+     * Filter, which Setoran to fetch.
+     */
+    where: SetoranWhereUniqueInput
+  }
+
+  /**
+   * Setoran findFirst
+   */
+  export type SetoranFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Setoran
+     */
+    select?: SetoranSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Setoran
+     */
+    omit?: SetoranOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SetoranInclude<ExtArgs> | null
+    /**
+     * Filter, which Setoran to fetch.
+     */
+    where?: SetoranWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Setorans to fetch.
+     */
+    orderBy?: SetoranOrderByWithRelationInput | SetoranOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Setorans.
+     */
+    cursor?: SetoranWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Setorans from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Setorans.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Setorans.
+     */
+    distinct?: SetoranScalarFieldEnum | SetoranScalarFieldEnum[]
+  }
+
+  /**
+   * Setoran findFirstOrThrow
+   */
+  export type SetoranFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Setoran
+     */
+    select?: SetoranSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Setoran
+     */
+    omit?: SetoranOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SetoranInclude<ExtArgs> | null
+    /**
+     * Filter, which Setoran to fetch.
+     */
+    where?: SetoranWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Setorans to fetch.
+     */
+    orderBy?: SetoranOrderByWithRelationInput | SetoranOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Setorans.
+     */
+    cursor?: SetoranWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Setorans from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Setorans.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Setorans.
+     */
+    distinct?: SetoranScalarFieldEnum | SetoranScalarFieldEnum[]
+  }
+
+  /**
+   * Setoran findMany
+   */
+  export type SetoranFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Setoran
+     */
+    select?: SetoranSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Setoran
+     */
+    omit?: SetoranOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SetoranInclude<ExtArgs> | null
+    /**
+     * Filter, which Setorans to fetch.
+     */
+    where?: SetoranWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Setorans to fetch.
+     */
+    orderBy?: SetoranOrderByWithRelationInput | SetoranOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Setorans.
+     */
+    cursor?: SetoranWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Setorans from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Setorans.
+     */
+    skip?: number
+    distinct?: SetoranScalarFieldEnum | SetoranScalarFieldEnum[]
+  }
+
+  /**
+   * Setoran create
+   */
+  export type SetoranCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Setoran
+     */
+    select?: SetoranSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Setoran
+     */
+    omit?: SetoranOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SetoranInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Setoran.
+     */
+    data: XOR<SetoranCreateInput, SetoranUncheckedCreateInput>
+  }
+
+  /**
+   * Setoran createMany
+   */
+  export type SetoranCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Setorans.
+     */
+    data: SetoranCreateManyInput | SetoranCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Setoran createManyAndReturn
+   */
+  export type SetoranCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Setoran
+     */
+    select?: SetoranSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Setoran
+     */
+    omit?: SetoranOmit<ExtArgs> | null
+    /**
+     * The data used to create many Setorans.
+     */
+    data: SetoranCreateManyInput | SetoranCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SetoranIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Setoran update
+   */
+  export type SetoranUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Setoran
+     */
+    select?: SetoranSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Setoran
+     */
+    omit?: SetoranOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SetoranInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Setoran.
+     */
+    data: XOR<SetoranUpdateInput, SetoranUncheckedUpdateInput>
+    /**
+     * Choose, which Setoran to update.
+     */
+    where: SetoranWhereUniqueInput
+  }
+
+  /**
+   * Setoran updateMany
+   */
+  export type SetoranUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Setorans.
+     */
+    data: XOR<SetoranUpdateManyMutationInput, SetoranUncheckedUpdateManyInput>
+    /**
+     * Filter which Setorans to update
+     */
+    where?: SetoranWhereInput
+    /**
+     * Limit how many Setorans to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Setoran updateManyAndReturn
+   */
+  export type SetoranUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Setoran
+     */
+    select?: SetoranSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Setoran
+     */
+    omit?: SetoranOmit<ExtArgs> | null
+    /**
+     * The data used to update Setorans.
+     */
+    data: XOR<SetoranUpdateManyMutationInput, SetoranUncheckedUpdateManyInput>
+    /**
+     * Filter which Setorans to update
+     */
+    where?: SetoranWhereInput
+    /**
+     * Limit how many Setorans to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SetoranIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Setoran upsert
+   */
+  export type SetoranUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Setoran
+     */
+    select?: SetoranSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Setoran
+     */
+    omit?: SetoranOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SetoranInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Setoran to update in case it exists.
+     */
+    where: SetoranWhereUniqueInput
+    /**
+     * In case the Setoran found by the `where` argument doesn't exist, create a new Setoran with this data.
+     */
+    create: XOR<SetoranCreateInput, SetoranUncheckedCreateInput>
+    /**
+     * In case the Setoran was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SetoranUpdateInput, SetoranUncheckedUpdateInput>
+  }
+
+  /**
+   * Setoran delete
+   */
+  export type SetoranDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Setoran
+     */
+    select?: SetoranSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Setoran
+     */
+    omit?: SetoranOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SetoranInclude<ExtArgs> | null
+    /**
+     * Filter which Setoran to delete.
+     */
+    where: SetoranWhereUniqueInput
+  }
+
+  /**
+   * Setoran deleteMany
+   */
+  export type SetoranDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Setorans to delete
+     */
+    where?: SetoranWhereInput
+    /**
+     * Limit how many Setorans to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Setoran without action
+   */
+  export type SetoranDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Setoran
+     */
+    select?: SetoranSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Setoran
+     */
+    omit?: SetoranOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SetoranInclude<ExtArgs> | null
   }
 
 
@@ -4460,6 +5776,21 @@ export namespace Prisma {
   export type SantriScalarFieldEnum = (typeof SantriScalarFieldEnum)[keyof typeof SantriScalarFieldEnum]
 
 
+  export const SetoranScalarFieldEnum: {
+    id_setoran: 'id_setoran',
+    santri_id: 'santri_id',
+    tanggal_setoran: 'tanggal_setoran',
+    juz: 'juz',
+    surat: 'surat',
+    ayat: 'ayat',
+    kategori: 'kategori',
+    taqwim: 'taqwim',
+    keterangan: 'keterangan'
+  };
+
+  export type SetoranScalarFieldEnum = (typeof SetoranScalarFieldEnum)[keyof typeof SetoranScalarFieldEnum]
+
+
   export const UserScalarFieldEnum: {
     id_user: 'id_user',
     username: 'username',
@@ -4558,6 +5889,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'KategoriSetoran'
+   */
+  export type EnumKategoriSetoranFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'KategoriSetoran'>
+    
+
+
+  /**
+   * Reference to a field of type 'KategoriSetoran[]'
+   */
+  export type ListEnumKategoriSetoranFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'KategoriSetoran[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -4640,6 +5985,7 @@ export namespace Prisma {
     halaqah_id?: IntFilter<"Santri"> | number
     deleted_at?: DateTimeNullableFilter<"Santri"> | Date | string | null
     halaqah?: XOR<HalaqahScalarRelationFilter, HalaqahWhereInput>
+    setoran?: SetoranListRelationFilter
   }
 
   export type SantriOrderByWithRelationInput = {
@@ -4650,6 +5996,7 @@ export namespace Prisma {
     halaqah_id?: SortOrder
     deleted_at?: SortOrderInput | SortOrder
     halaqah?: HalaqahOrderByWithRelationInput
+    setoran?: SetoranOrderByRelationAggregateInput
   }
 
   export type SantriWhereUniqueInput = Prisma.AtLeast<{
@@ -4663,6 +6010,7 @@ export namespace Prisma {
     halaqah_id?: IntFilter<"Santri"> | number
     deleted_at?: DateTimeNullableFilter<"Santri"> | Date | string | null
     halaqah?: XOR<HalaqahScalarRelationFilter, HalaqahWhereInput>
+    setoran?: SetoranListRelationFilter
   }, "id_santri">
 
   export type SantriOrderByWithAggregationInput = {
@@ -4689,6 +6037,83 @@ export namespace Prisma {
     target?: EnumKategoriTargetWithAggregatesFilter<"Santri"> | $Enums.KategoriTarget
     halaqah_id?: IntWithAggregatesFilter<"Santri"> | number
     deleted_at?: DateTimeNullableWithAggregatesFilter<"Santri"> | Date | string | null
+  }
+
+  export type SetoranWhereInput = {
+    AND?: SetoranWhereInput | SetoranWhereInput[]
+    OR?: SetoranWhereInput[]
+    NOT?: SetoranWhereInput | SetoranWhereInput[]
+    id_setoran?: IntFilter<"Setoran"> | number
+    santri_id?: IntFilter<"Setoran"> | number
+    tanggal_setoran?: DateTimeFilter<"Setoran"> | Date | string
+    juz?: IntFilter<"Setoran"> | number
+    surat?: StringFilter<"Setoran"> | string
+    ayat?: StringFilter<"Setoran"> | string
+    kategori?: EnumKategoriSetoranFilter<"Setoran"> | $Enums.KategoriSetoran
+    taqwim?: StringNullableFilter<"Setoran"> | string | null
+    keterangan?: StringNullableFilter<"Setoran"> | string | null
+    santri?: XOR<SantriScalarRelationFilter, SantriWhereInput>
+  }
+
+  export type SetoranOrderByWithRelationInput = {
+    id_setoran?: SortOrder
+    santri_id?: SortOrder
+    tanggal_setoran?: SortOrder
+    juz?: SortOrder
+    surat?: SortOrder
+    ayat?: SortOrder
+    kategori?: SortOrder
+    taqwim?: SortOrderInput | SortOrder
+    keterangan?: SortOrderInput | SortOrder
+    santri?: SantriOrderByWithRelationInput
+  }
+
+  export type SetoranWhereUniqueInput = Prisma.AtLeast<{
+    id_setoran?: number
+    AND?: SetoranWhereInput | SetoranWhereInput[]
+    OR?: SetoranWhereInput[]
+    NOT?: SetoranWhereInput | SetoranWhereInput[]
+    santri_id?: IntFilter<"Setoran"> | number
+    tanggal_setoran?: DateTimeFilter<"Setoran"> | Date | string
+    juz?: IntFilter<"Setoran"> | number
+    surat?: StringFilter<"Setoran"> | string
+    ayat?: StringFilter<"Setoran"> | string
+    kategori?: EnumKategoriSetoranFilter<"Setoran"> | $Enums.KategoriSetoran
+    taqwim?: StringNullableFilter<"Setoran"> | string | null
+    keterangan?: StringNullableFilter<"Setoran"> | string | null
+    santri?: XOR<SantriScalarRelationFilter, SantriWhereInput>
+  }, "id_setoran">
+
+  export type SetoranOrderByWithAggregationInput = {
+    id_setoran?: SortOrder
+    santri_id?: SortOrder
+    tanggal_setoran?: SortOrder
+    juz?: SortOrder
+    surat?: SortOrder
+    ayat?: SortOrder
+    kategori?: SortOrder
+    taqwim?: SortOrderInput | SortOrder
+    keterangan?: SortOrderInput | SortOrder
+    _count?: SetoranCountOrderByAggregateInput
+    _avg?: SetoranAvgOrderByAggregateInput
+    _max?: SetoranMaxOrderByAggregateInput
+    _min?: SetoranMinOrderByAggregateInput
+    _sum?: SetoranSumOrderByAggregateInput
+  }
+
+  export type SetoranScalarWhereWithAggregatesInput = {
+    AND?: SetoranScalarWhereWithAggregatesInput | SetoranScalarWhereWithAggregatesInput[]
+    OR?: SetoranScalarWhereWithAggregatesInput[]
+    NOT?: SetoranScalarWhereWithAggregatesInput | SetoranScalarWhereWithAggregatesInput[]
+    id_setoran?: IntWithAggregatesFilter<"Setoran"> | number
+    santri_id?: IntWithAggregatesFilter<"Setoran"> | number
+    tanggal_setoran?: DateTimeWithAggregatesFilter<"Setoran"> | Date | string
+    juz?: IntWithAggregatesFilter<"Setoran"> | number
+    surat?: StringWithAggregatesFilter<"Setoran"> | string
+    ayat?: StringWithAggregatesFilter<"Setoran"> | string
+    kategori?: EnumKategoriSetoranWithAggregatesFilter<"Setoran"> | $Enums.KategoriSetoran
+    taqwim?: StringNullableWithAggregatesFilter<"Setoran"> | string | null
+    keterangan?: StringNullableWithAggregatesFilter<"Setoran"> | string | null
   }
 
   export type UserWhereInput = {
@@ -4808,6 +6233,7 @@ export namespace Prisma {
     target?: $Enums.KategoriTarget
     deleted_at?: Date | string | null
     halaqah: HalaqahCreateNestedOneWithoutSantriInput
+    setoran?: SetoranCreateNestedManyWithoutSantriInput
   }
 
   export type SantriUncheckedCreateInput = {
@@ -4817,6 +6243,7 @@ export namespace Prisma {
     target?: $Enums.KategoriTarget
     halaqah_id: number
     deleted_at?: Date | string | null
+    setoran?: SetoranUncheckedCreateNestedManyWithoutSantriInput
   }
 
   export type SantriUpdateInput = {
@@ -4825,6 +6252,7 @@ export namespace Prisma {
     target?: EnumKategoriTargetFieldUpdateOperationsInput | $Enums.KategoriTarget
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     halaqah?: HalaqahUpdateOneRequiredWithoutSantriNestedInput
+    setoran?: SetoranUpdateManyWithoutSantriNestedInput
   }
 
   export type SantriUncheckedUpdateInput = {
@@ -4834,6 +6262,7 @@ export namespace Prisma {
     target?: EnumKategoriTargetFieldUpdateOperationsInput | $Enums.KategoriTarget
     halaqah_id?: IntFieldUpdateOperationsInput | number
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    setoran?: SetoranUncheckedUpdateManyWithoutSantriNestedInput
   }
 
   export type SantriCreateManyInput = {
@@ -4859,6 +6288,86 @@ export namespace Prisma {
     target?: EnumKategoriTargetFieldUpdateOperationsInput | $Enums.KategoriTarget
     halaqah_id?: IntFieldUpdateOperationsInput | number
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type SetoranCreateInput = {
+    tanggal_setoran?: Date | string
+    juz: number
+    surat: string
+    ayat: string
+    kategori?: $Enums.KategoriSetoran
+    taqwim?: string | null
+    keterangan?: string | null
+    santri: SantriCreateNestedOneWithoutSetoranInput
+  }
+
+  export type SetoranUncheckedCreateInput = {
+    id_setoran?: number
+    santri_id: number
+    tanggal_setoran?: Date | string
+    juz: number
+    surat: string
+    ayat: string
+    kategori?: $Enums.KategoriSetoran
+    taqwim?: string | null
+    keterangan?: string | null
+  }
+
+  export type SetoranUpdateInput = {
+    tanggal_setoran?: DateTimeFieldUpdateOperationsInput | Date | string
+    juz?: IntFieldUpdateOperationsInput | number
+    surat?: StringFieldUpdateOperationsInput | string
+    ayat?: StringFieldUpdateOperationsInput | string
+    kategori?: EnumKategoriSetoranFieldUpdateOperationsInput | $Enums.KategoriSetoran
+    taqwim?: NullableStringFieldUpdateOperationsInput | string | null
+    keterangan?: NullableStringFieldUpdateOperationsInput | string | null
+    santri?: SantriUpdateOneRequiredWithoutSetoranNestedInput
+  }
+
+  export type SetoranUncheckedUpdateInput = {
+    id_setoran?: IntFieldUpdateOperationsInput | number
+    santri_id?: IntFieldUpdateOperationsInput | number
+    tanggal_setoran?: DateTimeFieldUpdateOperationsInput | Date | string
+    juz?: IntFieldUpdateOperationsInput | number
+    surat?: StringFieldUpdateOperationsInput | string
+    ayat?: StringFieldUpdateOperationsInput | string
+    kategori?: EnumKategoriSetoranFieldUpdateOperationsInput | $Enums.KategoriSetoran
+    taqwim?: NullableStringFieldUpdateOperationsInput | string | null
+    keterangan?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type SetoranCreateManyInput = {
+    id_setoran?: number
+    santri_id: number
+    tanggal_setoran?: Date | string
+    juz: number
+    surat: string
+    ayat: string
+    kategori?: $Enums.KategoriSetoran
+    taqwim?: string | null
+    keterangan?: string | null
+  }
+
+  export type SetoranUpdateManyMutationInput = {
+    tanggal_setoran?: DateTimeFieldUpdateOperationsInput | Date | string
+    juz?: IntFieldUpdateOperationsInput | number
+    surat?: StringFieldUpdateOperationsInput | string
+    ayat?: StringFieldUpdateOperationsInput | string
+    kategori?: EnumKategoriSetoranFieldUpdateOperationsInput | $Enums.KategoriSetoran
+    taqwim?: NullableStringFieldUpdateOperationsInput | string | null
+    keterangan?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type SetoranUncheckedUpdateManyInput = {
+    id_setoran?: IntFieldUpdateOperationsInput | number
+    santri_id?: IntFieldUpdateOperationsInput | number
+    tanggal_setoran?: DateTimeFieldUpdateOperationsInput | Date | string
+    juz?: IntFieldUpdateOperationsInput | number
+    surat?: StringFieldUpdateOperationsInput | string
+    ayat?: StringFieldUpdateOperationsInput | string
+    kategori?: EnumKategoriSetoranFieldUpdateOperationsInput | $Enums.KategoriSetoran
+    taqwim?: NullableStringFieldUpdateOperationsInput | string | null
+    keterangan?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserCreateInput = {
@@ -5088,6 +6597,16 @@ export namespace Prisma {
     isNot?: HalaqahWhereInput
   }
 
+  export type SetoranListRelationFilter = {
+    every?: SetoranWhereInput
+    some?: SetoranWhereInput
+    none?: SetoranWhereInput
+  }
+
+  export type SetoranOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type SantriCountOrderByAggregateInput = {
     id_santri?: SortOrder
     nama_santri?: SortOrder
@@ -5151,6 +6670,101 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumKategoriTargetFilter<$PrismaModel>
     _max?: NestedEnumKategoriTargetFilter<$PrismaModel>
+  }
+
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type EnumKategoriSetoranFilter<$PrismaModel = never> = {
+    equals?: $Enums.KategoriSetoran | EnumKategoriSetoranFieldRefInput<$PrismaModel>
+    in?: $Enums.KategoriSetoran[] | ListEnumKategoriSetoranFieldRefInput<$PrismaModel>
+    notIn?: $Enums.KategoriSetoran[] | ListEnumKategoriSetoranFieldRefInput<$PrismaModel>
+    not?: NestedEnumKategoriSetoranFilter<$PrismaModel> | $Enums.KategoriSetoran
+  }
+
+  export type SantriScalarRelationFilter = {
+    is?: SantriWhereInput
+    isNot?: SantriWhereInput
+  }
+
+  export type SetoranCountOrderByAggregateInput = {
+    id_setoran?: SortOrder
+    santri_id?: SortOrder
+    tanggal_setoran?: SortOrder
+    juz?: SortOrder
+    surat?: SortOrder
+    ayat?: SortOrder
+    kategori?: SortOrder
+    taqwim?: SortOrder
+    keterangan?: SortOrder
+  }
+
+  export type SetoranAvgOrderByAggregateInput = {
+    id_setoran?: SortOrder
+    santri_id?: SortOrder
+    juz?: SortOrder
+  }
+
+  export type SetoranMaxOrderByAggregateInput = {
+    id_setoran?: SortOrder
+    santri_id?: SortOrder
+    tanggal_setoran?: SortOrder
+    juz?: SortOrder
+    surat?: SortOrder
+    ayat?: SortOrder
+    kategori?: SortOrder
+    taqwim?: SortOrder
+    keterangan?: SortOrder
+  }
+
+  export type SetoranMinOrderByAggregateInput = {
+    id_setoran?: SortOrder
+    santri_id?: SortOrder
+    tanggal_setoran?: SortOrder
+    juz?: SortOrder
+    surat?: SortOrder
+    ayat?: SortOrder
+    kategori?: SortOrder
+    taqwim?: SortOrder
+    keterangan?: SortOrder
+  }
+
+  export type SetoranSumOrderByAggregateInput = {
+    id_setoran?: SortOrder
+    santri_id?: SortOrder
+    juz?: SortOrder
+  }
+
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type EnumKategoriSetoranWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.KategoriSetoran | EnumKategoriSetoranFieldRefInput<$PrismaModel>
+    in?: $Enums.KategoriSetoran[] | ListEnumKategoriSetoranFieldRefInput<$PrismaModel>
+    notIn?: $Enums.KategoriSetoran[] | ListEnumKategoriSetoranFieldRefInput<$PrismaModel>
+    not?: NestedEnumKategoriSetoranWithAggregatesFilter<$PrismaModel> | $Enums.KategoriSetoran
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumKategoriSetoranFilter<$PrismaModel>
+    _max?: NestedEnumKategoriSetoranFilter<$PrismaModel>
   }
 
   export type HalaqahNullableScalarRelationFilter = {
@@ -5271,6 +6885,20 @@ export namespace Prisma {
     connect?: HalaqahWhereUniqueInput
   }
 
+  export type SetoranCreateNestedManyWithoutSantriInput = {
+    create?: XOR<SetoranCreateWithoutSantriInput, SetoranUncheckedCreateWithoutSantriInput> | SetoranCreateWithoutSantriInput[] | SetoranUncheckedCreateWithoutSantriInput[]
+    connectOrCreate?: SetoranCreateOrConnectWithoutSantriInput | SetoranCreateOrConnectWithoutSantriInput[]
+    createMany?: SetoranCreateManySantriInputEnvelope
+    connect?: SetoranWhereUniqueInput | SetoranWhereUniqueInput[]
+  }
+
+  export type SetoranUncheckedCreateNestedManyWithoutSantriInput = {
+    create?: XOR<SetoranCreateWithoutSantriInput, SetoranUncheckedCreateWithoutSantriInput> | SetoranCreateWithoutSantriInput[] | SetoranUncheckedCreateWithoutSantriInput[]
+    connectOrCreate?: SetoranCreateOrConnectWithoutSantriInput | SetoranCreateOrConnectWithoutSantriInput[]
+    createMany?: SetoranCreateManySantriInputEnvelope
+    connect?: SetoranWhereUniqueInput | SetoranWhereUniqueInput[]
+  }
+
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
   }
@@ -5285,6 +6913,56 @@ export namespace Prisma {
     upsert?: HalaqahUpsertWithoutSantriInput
     connect?: HalaqahWhereUniqueInput
     update?: XOR<XOR<HalaqahUpdateToOneWithWhereWithoutSantriInput, HalaqahUpdateWithoutSantriInput>, HalaqahUncheckedUpdateWithoutSantriInput>
+  }
+
+  export type SetoranUpdateManyWithoutSantriNestedInput = {
+    create?: XOR<SetoranCreateWithoutSantriInput, SetoranUncheckedCreateWithoutSantriInput> | SetoranCreateWithoutSantriInput[] | SetoranUncheckedCreateWithoutSantriInput[]
+    connectOrCreate?: SetoranCreateOrConnectWithoutSantriInput | SetoranCreateOrConnectWithoutSantriInput[]
+    upsert?: SetoranUpsertWithWhereUniqueWithoutSantriInput | SetoranUpsertWithWhereUniqueWithoutSantriInput[]
+    createMany?: SetoranCreateManySantriInputEnvelope
+    set?: SetoranWhereUniqueInput | SetoranWhereUniqueInput[]
+    disconnect?: SetoranWhereUniqueInput | SetoranWhereUniqueInput[]
+    delete?: SetoranWhereUniqueInput | SetoranWhereUniqueInput[]
+    connect?: SetoranWhereUniqueInput | SetoranWhereUniqueInput[]
+    update?: SetoranUpdateWithWhereUniqueWithoutSantriInput | SetoranUpdateWithWhereUniqueWithoutSantriInput[]
+    updateMany?: SetoranUpdateManyWithWhereWithoutSantriInput | SetoranUpdateManyWithWhereWithoutSantriInput[]
+    deleteMany?: SetoranScalarWhereInput | SetoranScalarWhereInput[]
+  }
+
+  export type SetoranUncheckedUpdateManyWithoutSantriNestedInput = {
+    create?: XOR<SetoranCreateWithoutSantriInput, SetoranUncheckedCreateWithoutSantriInput> | SetoranCreateWithoutSantriInput[] | SetoranUncheckedCreateWithoutSantriInput[]
+    connectOrCreate?: SetoranCreateOrConnectWithoutSantriInput | SetoranCreateOrConnectWithoutSantriInput[]
+    upsert?: SetoranUpsertWithWhereUniqueWithoutSantriInput | SetoranUpsertWithWhereUniqueWithoutSantriInput[]
+    createMany?: SetoranCreateManySantriInputEnvelope
+    set?: SetoranWhereUniqueInput | SetoranWhereUniqueInput[]
+    disconnect?: SetoranWhereUniqueInput | SetoranWhereUniqueInput[]
+    delete?: SetoranWhereUniqueInput | SetoranWhereUniqueInput[]
+    connect?: SetoranWhereUniqueInput | SetoranWhereUniqueInput[]
+    update?: SetoranUpdateWithWhereUniqueWithoutSantriInput | SetoranUpdateWithWhereUniqueWithoutSantriInput[]
+    updateMany?: SetoranUpdateManyWithWhereWithoutSantriInput | SetoranUpdateManyWithWhereWithoutSantriInput[]
+    deleteMany?: SetoranScalarWhereInput | SetoranScalarWhereInput[]
+  }
+
+  export type SantriCreateNestedOneWithoutSetoranInput = {
+    create?: XOR<SantriCreateWithoutSetoranInput, SantriUncheckedCreateWithoutSetoranInput>
+    connectOrCreate?: SantriCreateOrConnectWithoutSetoranInput
+    connect?: SantriWhereUniqueInput
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
+  export type EnumKategoriSetoranFieldUpdateOperationsInput = {
+    set?: $Enums.KategoriSetoran
+  }
+
+  export type SantriUpdateOneRequiredWithoutSetoranNestedInput = {
+    create?: XOR<SantriCreateWithoutSetoranInput, SantriUncheckedCreateWithoutSetoranInput>
+    connectOrCreate?: SantriCreateOrConnectWithoutSetoranInput
+    upsert?: SantriUpsertWithoutSetoranInput
+    connect?: SantriWhereUniqueInput
+    update?: XOR<XOR<SantriUpdateToOneWithWhereWithoutSetoranInput, SantriUpdateWithoutSetoranInput>, SantriUncheckedUpdateWithoutSetoranInput>
   }
 
   export type HalaqahCreateNestedOneWithoutMuhafizInput = {
@@ -5472,6 +7150,48 @@ export namespace Prisma {
     _max?: NestedEnumKategoriTargetFilter<$PrismaModel>
   }
 
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type NestedEnumKategoriSetoranFilter<$PrismaModel = never> = {
+    equals?: $Enums.KategoriSetoran | EnumKategoriSetoranFieldRefInput<$PrismaModel>
+    in?: $Enums.KategoriSetoran[] | ListEnumKategoriSetoranFieldRefInput<$PrismaModel>
+    notIn?: $Enums.KategoriSetoran[] | ListEnumKategoriSetoranFieldRefInput<$PrismaModel>
+    not?: NestedEnumKategoriSetoranFilter<$PrismaModel> | $Enums.KategoriSetoran
+  }
+
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumKategoriSetoranWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.KategoriSetoran | EnumKategoriSetoranFieldRefInput<$PrismaModel>
+    in?: $Enums.KategoriSetoran[] | ListEnumKategoriSetoranFieldRefInput<$PrismaModel>
+    notIn?: $Enums.KategoriSetoran[] | ListEnumKategoriSetoranFieldRefInput<$PrismaModel>
+    not?: NestedEnumKategoriSetoranWithAggregatesFilter<$PrismaModel> | $Enums.KategoriSetoran
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumKategoriSetoranFilter<$PrismaModel>
+    _max?: NestedEnumKategoriSetoranFilter<$PrismaModel>
+  }
+
   export type UserCreateWithoutHalaqahInput = {
     username: string
     email: string
@@ -5499,6 +7219,7 @@ export namespace Prisma {
     nomor_telepon?: string | null
     target?: $Enums.KategoriTarget
     deleted_at?: Date | string | null
+    setoran?: SetoranCreateNestedManyWithoutSantriInput
   }
 
   export type SantriUncheckedCreateWithoutHalaqahInput = {
@@ -5507,6 +7228,7 @@ export namespace Prisma {
     nomor_telepon?: string | null
     target?: $Enums.KategoriTarget
     deleted_at?: Date | string | null
+    setoran?: SetoranUncheckedCreateNestedManyWithoutSantriInput
   }
 
   export type SantriCreateOrConnectWithoutHalaqahInput = {
@@ -5593,6 +7315,37 @@ export namespace Prisma {
     create: XOR<HalaqahCreateWithoutSantriInput, HalaqahUncheckedCreateWithoutSantriInput>
   }
 
+  export type SetoranCreateWithoutSantriInput = {
+    tanggal_setoran?: Date | string
+    juz: number
+    surat: string
+    ayat: string
+    kategori?: $Enums.KategoriSetoran
+    taqwim?: string | null
+    keterangan?: string | null
+  }
+
+  export type SetoranUncheckedCreateWithoutSantriInput = {
+    id_setoran?: number
+    tanggal_setoran?: Date | string
+    juz: number
+    surat: string
+    ayat: string
+    kategori?: $Enums.KategoriSetoran
+    taqwim?: string | null
+    keterangan?: string | null
+  }
+
+  export type SetoranCreateOrConnectWithoutSantriInput = {
+    where: SetoranWhereUniqueInput
+    create: XOR<SetoranCreateWithoutSantriInput, SetoranUncheckedCreateWithoutSantriInput>
+  }
+
+  export type SetoranCreateManySantriInputEnvelope = {
+    data: SetoranCreateManySantriInput | SetoranCreateManySantriInput[]
+    skipDuplicates?: boolean
+  }
+
   export type HalaqahUpsertWithoutSantriInput = {
     update: XOR<HalaqahUpdateWithoutSantriInput, HalaqahUncheckedUpdateWithoutSantriInput>
     create: XOR<HalaqahCreateWithoutSantriInput, HalaqahUncheckedCreateWithoutSantriInput>
@@ -5614,6 +7367,87 @@ export namespace Prisma {
     id_halaqah?: IntFieldUpdateOperationsInput | number
     name_halaqah?: StringFieldUpdateOperationsInput | string
     muhafiz_id?: IntFieldUpdateOperationsInput | number
+    deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type SetoranUpsertWithWhereUniqueWithoutSantriInput = {
+    where: SetoranWhereUniqueInput
+    update: XOR<SetoranUpdateWithoutSantriInput, SetoranUncheckedUpdateWithoutSantriInput>
+    create: XOR<SetoranCreateWithoutSantriInput, SetoranUncheckedCreateWithoutSantriInput>
+  }
+
+  export type SetoranUpdateWithWhereUniqueWithoutSantriInput = {
+    where: SetoranWhereUniqueInput
+    data: XOR<SetoranUpdateWithoutSantriInput, SetoranUncheckedUpdateWithoutSantriInput>
+  }
+
+  export type SetoranUpdateManyWithWhereWithoutSantriInput = {
+    where: SetoranScalarWhereInput
+    data: XOR<SetoranUpdateManyMutationInput, SetoranUncheckedUpdateManyWithoutSantriInput>
+  }
+
+  export type SetoranScalarWhereInput = {
+    AND?: SetoranScalarWhereInput | SetoranScalarWhereInput[]
+    OR?: SetoranScalarWhereInput[]
+    NOT?: SetoranScalarWhereInput | SetoranScalarWhereInput[]
+    id_setoran?: IntFilter<"Setoran"> | number
+    santri_id?: IntFilter<"Setoran"> | number
+    tanggal_setoran?: DateTimeFilter<"Setoran"> | Date | string
+    juz?: IntFilter<"Setoran"> | number
+    surat?: StringFilter<"Setoran"> | string
+    ayat?: StringFilter<"Setoran"> | string
+    kategori?: EnumKategoriSetoranFilter<"Setoran"> | $Enums.KategoriSetoran
+    taqwim?: StringNullableFilter<"Setoran"> | string | null
+    keterangan?: StringNullableFilter<"Setoran"> | string | null
+  }
+
+  export type SantriCreateWithoutSetoranInput = {
+    nama_santri: string
+    nomor_telepon?: string | null
+    target?: $Enums.KategoriTarget
+    deleted_at?: Date | string | null
+    halaqah: HalaqahCreateNestedOneWithoutSantriInput
+  }
+
+  export type SantriUncheckedCreateWithoutSetoranInput = {
+    id_santri?: number
+    nama_santri: string
+    nomor_telepon?: string | null
+    target?: $Enums.KategoriTarget
+    halaqah_id: number
+    deleted_at?: Date | string | null
+  }
+
+  export type SantriCreateOrConnectWithoutSetoranInput = {
+    where: SantriWhereUniqueInput
+    create: XOR<SantriCreateWithoutSetoranInput, SantriUncheckedCreateWithoutSetoranInput>
+  }
+
+  export type SantriUpsertWithoutSetoranInput = {
+    update: XOR<SantriUpdateWithoutSetoranInput, SantriUncheckedUpdateWithoutSetoranInput>
+    create: XOR<SantriCreateWithoutSetoranInput, SantriUncheckedCreateWithoutSetoranInput>
+    where?: SantriWhereInput
+  }
+
+  export type SantriUpdateToOneWithWhereWithoutSetoranInput = {
+    where?: SantriWhereInput
+    data: XOR<SantriUpdateWithoutSetoranInput, SantriUncheckedUpdateWithoutSetoranInput>
+  }
+
+  export type SantriUpdateWithoutSetoranInput = {
+    nama_santri?: StringFieldUpdateOperationsInput | string
+    nomor_telepon?: NullableStringFieldUpdateOperationsInput | string | null
+    target?: EnumKategoriTargetFieldUpdateOperationsInput | $Enums.KategoriTarget
+    deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    halaqah?: HalaqahUpdateOneRequiredWithoutSantriNestedInput
+  }
+
+  export type SantriUncheckedUpdateWithoutSetoranInput = {
+    id_santri?: IntFieldUpdateOperationsInput | number
+    nama_santri?: StringFieldUpdateOperationsInput | string
+    nomor_telepon?: NullableStringFieldUpdateOperationsInput | string | null
+    target?: EnumKategoriTargetFieldUpdateOperationsInput | $Enums.KategoriTarget
+    halaqah_id?: IntFieldUpdateOperationsInput | number
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
@@ -5672,6 +7506,7 @@ export namespace Prisma {
     nomor_telepon?: NullableStringFieldUpdateOperationsInput | string | null
     target?: EnumKategoriTargetFieldUpdateOperationsInput | $Enums.KategoriTarget
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    setoran?: SetoranUpdateManyWithoutSantriNestedInput
   }
 
   export type SantriUncheckedUpdateWithoutHalaqahInput = {
@@ -5680,6 +7515,7 @@ export namespace Prisma {
     nomor_telepon?: NullableStringFieldUpdateOperationsInput | string | null
     target?: EnumKategoriTargetFieldUpdateOperationsInput | $Enums.KategoriTarget
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    setoran?: SetoranUncheckedUpdateManyWithoutSantriNestedInput
   }
 
   export type SantriUncheckedUpdateManyWithoutHalaqahInput = {
@@ -5688,6 +7524,49 @@ export namespace Prisma {
     nomor_telepon?: NullableStringFieldUpdateOperationsInput | string | null
     target?: EnumKategoriTargetFieldUpdateOperationsInput | $Enums.KategoriTarget
     deleted_at?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type SetoranCreateManySantriInput = {
+    id_setoran?: number
+    tanggal_setoran?: Date | string
+    juz: number
+    surat: string
+    ayat: string
+    kategori?: $Enums.KategoriSetoran
+    taqwim?: string | null
+    keterangan?: string | null
+  }
+
+  export type SetoranUpdateWithoutSantriInput = {
+    tanggal_setoran?: DateTimeFieldUpdateOperationsInput | Date | string
+    juz?: IntFieldUpdateOperationsInput | number
+    surat?: StringFieldUpdateOperationsInput | string
+    ayat?: StringFieldUpdateOperationsInput | string
+    kategori?: EnumKategoriSetoranFieldUpdateOperationsInput | $Enums.KategoriSetoran
+    taqwim?: NullableStringFieldUpdateOperationsInput | string | null
+    keterangan?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type SetoranUncheckedUpdateWithoutSantriInput = {
+    id_setoran?: IntFieldUpdateOperationsInput | number
+    tanggal_setoran?: DateTimeFieldUpdateOperationsInput | Date | string
+    juz?: IntFieldUpdateOperationsInput | number
+    surat?: StringFieldUpdateOperationsInput | string
+    ayat?: StringFieldUpdateOperationsInput | string
+    kategori?: EnumKategoriSetoranFieldUpdateOperationsInput | $Enums.KategoriSetoran
+    taqwim?: NullableStringFieldUpdateOperationsInput | string | null
+    keterangan?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type SetoranUncheckedUpdateManyWithoutSantriInput = {
+    id_setoran?: IntFieldUpdateOperationsInput | number
+    tanggal_setoran?: DateTimeFieldUpdateOperationsInput | Date | string
+    juz?: IntFieldUpdateOperationsInput | number
+    surat?: StringFieldUpdateOperationsInput | string
+    ayat?: StringFieldUpdateOperationsInput | string
+    kategori?: EnumKategoriSetoranFieldUpdateOperationsInput | $Enums.KategoriSetoran
+    taqwim?: NullableStringFieldUpdateOperationsInput | string | null
+    keterangan?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
 

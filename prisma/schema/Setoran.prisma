@@ -1,0 +1,20 @@
+enum KategoriSetoran {
+    HAFALAN
+    MURAJAAH
+}
+
+model Setoran {
+    id_setoran Int @id @default(autoincrement())
+    santri_id Int
+    santri Santri @relation(fields: [santri_id], references: [id_santri])
+
+    tanggal_setoran DateTime @default(now())
+    juz Int
+    surat String
+    ayat String
+    kategori KategoriSetoran @default(HAFALAN)
+    taqwim String?
+    keterangan String?
+
+    @@map("setoran")
+}

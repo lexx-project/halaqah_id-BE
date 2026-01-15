@@ -136,6 +136,18 @@ exports.Prisma.SantriScalarFieldEnum = {
   deleted_at: 'deleted_at'
 };
 
+exports.Prisma.SetoranScalarFieldEnum = {
+  id_setoran: 'id_setoran',
+  santri_id: 'santri_id',
+  tanggal_setoran: 'tanggal_setoran',
+  juz: 'juz',
+  surat: 'surat',
+  ayat: 'ayat',
+  kategori: 'kategori',
+  taqwim: 'taqwim',
+  keterangan: 'keterangan'
+};
+
 exports.Prisma.UserScalarFieldEnum = {
   id_user: 'id_user',
   username: 'username',
@@ -165,9 +177,15 @@ exports.KategoriTarget = exports.$Enums.KategoriTarget = {
   INTENSE: 'INTENSE'
 };
 
+exports.KategoriSetoran = exports.$Enums.KategoriSetoran = {
+  HAFALAN: 'HAFALAN',
+  MURAJAAH: 'MURAJAAH'
+};
+
 exports.Prisma.ModelName = {
   Halaqah: 'Halaqah',
   Santri: 'Santri',
+  Setoran: 'Setoran',
   User: 'User'
 };
 

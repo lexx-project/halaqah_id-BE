@@ -5,7 +5,13 @@ import { successResponse } from "../utils/response";
 
 export const create = asyncHandler(async (req: any, res: Response) => {
   const result = await setoranService.inputSetoran(req.user, req.body);
-  return successResponse(res, "Setoran berhasil dicatat", result, 201);
+  return successResponse(
+    res,
+    "Setoran berhasil dicatat",
+    result,
+    undefined,
+    201
+  );
 });
 
 export const getBySantri = asyncHandler(async (req: any, res: Response) => {

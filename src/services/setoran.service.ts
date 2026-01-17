@@ -56,7 +56,7 @@ export const getSantriHistory = async (
     },
   });
   if (!santri) {
-    const error: any = new Error("Santri not found");
+    const error: any = new Error("Santri tidak ditemukan");
     error.status = 404;
     throw error;
   }
@@ -69,7 +69,7 @@ export const getSantriHistory = async (
     });
     if (santri.halaqah_id !== halaqah?.id_halaqah) {
       const error: any = new Error(
-        "Akses ditolak: Santri ini bukan halaqah Anda!"
+        "Akses ditolak: Santri ini bukan anggota halaqah Anda!"
       );
       error.status = 403;
       throw error;

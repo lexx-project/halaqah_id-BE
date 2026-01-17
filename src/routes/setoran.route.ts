@@ -13,4 +13,13 @@ router.post(
   setoranController.create
 );
 
+router.get(
+  "/all",
+  authMiddleware,
+  roleMiddleware(["superadmin"]),
+  setoranController.getAll
+);
+
+router.get("/santri/:santriId", authMiddleware, setoranController.getBySantri);
+
 export default router;

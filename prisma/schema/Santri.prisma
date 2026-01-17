@@ -18,6 +18,5 @@ model Santri {
 // absensi Absensi[]
 setoran Setoran[]
 
-deleted_at DateTime?
     @@map("santri")
 }

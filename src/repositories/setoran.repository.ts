@@ -14,3 +14,23 @@ export const getSetoranBySantri = async (santriId: number) => {
     },
   });
 };
+
+export const getAllSetoran = async () => {
+  return await prisma.setoran.findMany({
+    include: {
+      santri: {
+        select: {
+          nama_santri: true,
+          halaqah: {
+            select: {
+              name_halaqah: true,
+            },
+          },
+        },
+      },
+    },
+    orderBy: {
+      tanggal_setoran: "desc",
+    },
+  });
+};

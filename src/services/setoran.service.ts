@@ -45,3 +45,39 @@ export const inputSetoran = async (
   }
   return await setoranRepo.createSetoran(data);
 };
+
+export const getSantriHistory = async (
+  santriId: number,
+  user: { id: number; role: string }
+) => {
+  const santri = await prisma.santri.findUnique({
+    where: {
+      id_santri: santriId,
+    },
+  });
+  if (!santri) {
+    const error: any = new Error("Santri not found");
+    error.status = 404;
+    throw error;
+  }
+
+  if (user.role === "muhafiz") {
+    const halaqah = await prisma.halaqah.findFirst({
+      where: {
+        muhafiz_id: Number(user.id),
+      },
+    });
+    if (santri.halaqah_id !== halaqah?.id_halaqah) {
+      const error: any = new Error(
+        "Akses ditolak: Santri ini bukan halaqah Anda!"
+      );
+      error.status = 403;
+      throw error;
+    }
+  }
+  return await setoranRepo.getSetoranBySantri(santriId);
+};
+
+export const getAllSetoran = async () => {
+  return await setoranRepo.getAllSetoran();
+};

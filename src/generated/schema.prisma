@@ -20,12 +20,15 @@ enum KategoriTarget {
 }
 
 model Santri {
-  id_santri   Int            @id @default(autoincrement())
-  nama_santri String
-  target      KategoriTarget @default(RINGAN)
+  id_santri     Int            @id @default(autoincrement())
+  nama_santri   String
+  nomor_telepon String?
+  target        KategoriTarget @default(RINGAN)
 
   halaqah_id Int
   halaqah    Halaqah @relation(fields: [halaqah_id], references: [id_halaqah])
+
+  deleted_at DateTime?
 
   // absensi Absensi[]
   // setoran Setoran[]

@@ -130,8 +130,10 @@ exports.Prisma.HalaqahScalarFieldEnum = {
 exports.Prisma.SantriScalarFieldEnum = {
   id_santri: 'id_santri',
   nama_santri: 'nama_santri',
+  nomor_telepon: 'nomor_telepon',
   target: 'target',
-  halaqah_id: 'halaqah_id'
+  halaqah_id: 'halaqah_id',
+  deleted_at: 'deleted_at'
 };
 
 exports.Prisma.UserScalarFieldEnum = {

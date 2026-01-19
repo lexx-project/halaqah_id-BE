@@ -34,7 +34,7 @@ export const getAllHalaqah = async () => {
         },
       },
       _count: {
-        select: { santri: true },
+        select: { santri: { where: { deleted_at: null } } },
       },
     },
   });

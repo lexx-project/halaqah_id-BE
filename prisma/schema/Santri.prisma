@@ -13,9 +13,10 @@ model Santri {
     halaqah_id Int
     halaqah  Halaqah @relation(fields: [halaqah_id], references: [id_halaqah])
 
-// absensi Absensi[]
-// setoran Setoran[]
+    deleted_at DateTime?
 
-deleted_at DateTime?
+// absensi Absensi[]
+setoran Setoran[]
+
     @@map("santri")
 }

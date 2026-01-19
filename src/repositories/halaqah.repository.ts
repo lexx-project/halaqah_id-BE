@@ -19,15 +19,22 @@ export const getAllHalaqah = async () => {
       deleted_at: null,
     },
     include: {
-      muhafiz: { select: { id_user: true, username: true, email: true } },
-      _count: {
-        select: {
-          santri: {
-            where: {
-              deleted_at: null,
-            },
-          },
+      muhafiz: {
+        select: { id_user: true, username: true, email: true },
+      },
+      santri: {
+        where: {
+          deleted_at: null,
         },
+        select: {
+          id_santri: true,
+          nama_santri: true,
+          nomor_telepon: true,
+          target: true,
+        },
+      },
+      _count: {
+        select: { santri: true },
       },
     },
   });

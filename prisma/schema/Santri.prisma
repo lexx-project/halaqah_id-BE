@@ -15,7 +15,7 @@ model Santri {
 
     deleted_at DateTime?
 
-// absensi Absensi[]
+absensi Absensi[]
 setoran Setoran[]
 
     @@map("santri")

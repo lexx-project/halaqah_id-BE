@@ -1,0 +1,7 @@
+================================================
+   API Testing - Module Absensi Verification
+   Target: Santri 39 | Actors: 55 & 22
+================================================
+
+--- 1. Login Superadmin ---
+❌ Superadmin login failed. Exiting.

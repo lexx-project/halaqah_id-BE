@@ -13,7 +13,7 @@ model Absensi {
 
     tanggal DateTime @default(now())
     status statusAbsensi @default(HADIR)
-    keterangan String
+    keterangan String?
 
     @@map("absensi")
 }

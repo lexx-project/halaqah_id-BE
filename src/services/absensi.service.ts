@@ -5,7 +5,7 @@ export const inputAbsensi = async (
   user: { id: number; role: string },
   data: any,
 ) => {
-  // Pastikan variabel santri_id ada dan merupakan angka
+  console.log("DEBUG DATA DARI FE:", data);
   const santriId = Number(data.santri_id);
 
   if (isNaN(santriId)) {
@@ -13,10 +13,8 @@ export const inputAbsensi = async (
     error.status = 400;
     throw error;
   }
-
-  // 1. Validasi keberadaan santri
   const santri = await prisma.santri.findUnique({
-    where: { id_santri: santriId }, // Pastikan nama variabel sesuai schema
+    where: { id_santri: santriId },
   });
 
   if (!santri) {
@@ -24,8 +22,6 @@ export const inputAbsensi = async (
     error.status = 404;
     throw error;
   }
-
-  // 2. Proteksi RBAC Muhafiz
   if (user.role === "muhafiz") {
     const halaqah = await prisma.halaqah.findFirst({
       where: { muhafiz_id: Number(user.id), deleted_at: null },
@@ -40,7 +36,6 @@ export const inputAbsensi = async (
     }
   }
 
-  // 3. Cek Duplikasi (PERBAIKAN: Masukkan santri_id ke dalam where)
   const inputDate = data.tanggal ? new Date(data.tanggal) : new Date();
   const startOfDay = new Date(inputDate);
   startOfDay.setHours(0, 0, 0, 0);

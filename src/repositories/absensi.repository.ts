@@ -6,32 +6,26 @@ export const createAbsensi = async (data: any) => {
 
 export const getAbsensiBySantri = async (santriId: number) => {
   return await prisma.absensi.findMany({
-    where: {
-      santri_id: santriId,
-    },
-    orderBy: {
-      tanggal: "desc",
-    },
+    where: { santri_id: santriId },
+    orderBy: { tanggal: "desc" },
   });
 };
 
 export const getAbsensiByHalaqah = async (halaqahId: number, date?: string) => {
-  const targetData = date ? new Date(date) : new Date();
+  const targetDate = date ? new Date(date) : new Date();
+  const startOfDay = new Date(targetDate);
+  startOfDay.setHours(0, 0, 0, 0);
+  const endOfDay = new Date(targetDate);
+  endOfDay.setHours(23, 59, 59, 999);
 
   return await prisma.absensi.findMany({
     where: {
       santri: { halaqah_id: halaqahId },
-      tanggal: {
-        gte: new Date(targetData.setHours(0, 0, 0, 0)),
-        lte: new Date(targetData.setHours(23, 59, 59, 999)),
-      },
+      tanggal: { gte: startOfDay, lte: endOfDay },
     },
     include: {
-      santri: {
-        select: {
-          nama_santri: true,
-        },
-      },
+      santri: { select: { nama_santri: true } },
     },
+    orderBy: { tanggal: "desc" },
   });
 };

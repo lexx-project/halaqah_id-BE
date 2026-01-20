@@ -5,8 +5,29 @@ export const inputAbsensi = async (
   user: { id: number; role: string },
   data: any,
 ) => {
+  const santriId = Number(data.santri_id);
+  const inputDate = data.tanggal ? new Date(data.tanggal) : new Date();
+
+  const startOfDay = new Date(inputDate);
+  startOfDay.setHours(0, 0, 0, 0);
+  const endOfDay = new Date(inputDate);
+  endOfDay.setHours(23, 59, 59, 999);
+
+  const existingAbsensi = await prisma.absensi.findFirst({
+    where: {
+      santri_id: santriId,
+      tanggal: { gte: startOfDay, lte: endOfDay },
+    },
+  });
+
+  if (existingAbsensi) {
+    const error: any = new Error("Santri ini sudah diabsen hari ini!");
+    error.status = 400;
+    throw error;
+  }
+
   const santri = await prisma.santri.findUnique({
-    where: { id_santri: Number(data.santri_id) },
+    where: { id_santri: santriId },
   });
 
   if (!santri) {
@@ -39,10 +60,10 @@ export const inputAbsensi = async (
   }
 
   return await absensiRepo.createAbsensi({
-    santri_id: Number(data.santri_id),
+    santri_id: santriId,
     status: data.status,
     keterangan: data.keterangan || null,
-    tanggal: data.tanggal ? new Date(data.tanggal) : new Date(),
+    tanggal: inputDate,
   });
 };
 
@@ -53,25 +74,14 @@ export const getSantriAbsensiHistory = async (
   const santri = await prisma.santri.findUnique({
     where: { id_santri: santriId },
   });
-
-  if (!santri) {
-    const error: any = new Error("Santri tidak ditemukan");
-    error.status = 404;
-    throw error;
-  }
+  if (!santri) throw { status: 404, message: "Santri tidak ditemukan" };
 
   if (user.role === "muhafiz") {
     const halaqah = await prisma.halaqah.findFirst({
       where: { muhafiz_id: Number(user.id) },
     });
-
-    if (!halaqah || santri.halaqah_id !== halaqah.id_halaqah) {
-      const error: any = new Error(
-        "Akses ditolak: Anda tidak berhak melihat absensi santri ini!",
-      );
-      error.status = 403;
-      throw error;
-    }
+    if (!halaqah || santri.halaqah_id !== halaqah.id_halaqah)
+      throw { status: 403, message: "Akses ditolak!" };
   }
 
   return await absensiRepo.getAbsensiBySantri(santriId);

@@ -5,11 +5,18 @@ export const inputAbsensi = async (
   user: { id: number; role: string },
   data: any,
 ) => {
+  // Pastikan variabel santri_id ada dan merupakan angka
   const santriId = Number(data.santri_id);
+
+  if (isNaN(santriId)) {
+    const error: any = new Error("santri_id tidak valid atau tidak ditemukan");
+    error.status = 400;
+    throw error;
+  }
 
   // 1. Validasi keberadaan santri
   const santri = await prisma.santri.findUnique({
-    where: { id_santri: santriId },
+    where: { id_santri: santriId }, // Pastikan nama variabel sesuai schema
   });
 
   if (!santri) {
@@ -18,7 +25,7 @@ export const inputAbsensi = async (
     throw error;
   }
 
-  // 2. PROTEKSI RBAC (WAJIB PERTAMA): Cek apakah Muhafiz berhak mengabsen santri ini
+  // 2. Proteksi RBAC Muhafiz
   if (user.role === "muhafiz") {
     const halaqah = await prisma.halaqah.findFirst({
       where: { muhafiz_id: Number(user.id), deleted_at: null },
@@ -26,17 +33,15 @@ export const inputAbsensi = async (
 
     if (!halaqah || santri.halaqah_id !== halaqah.id_halaqah) {
       const error: any = new Error(
-        "Akses ditolak: Santri ini bukan anggota halaqah Anda!",
+        "Akses ditolak: Santri bukan anggota halaqah Anda!",
       );
       error.status = 403;
       throw error;
     }
   }
 
-  // 3. CEK DUPLIKASI: Satu santri hanya boleh absen 1x per hari
+  // 3. Cek Duplikasi (PERBAIKAN: Masukkan santri_id ke dalam where)
   const inputDate = data.tanggal ? new Date(data.tanggal) : new Date();
-
-  // Set range waktu hari tersebut (00:00:00 - 23:59:59)
   const startOfDay = new Date(inputDate);
   startOfDay.setHours(0, 0, 0, 0);
 
@@ -62,7 +67,7 @@ export const inputAbsensi = async (
   const validStatus = ["HADIR", "IZIN", "SAKIT", "ALFA", "TERLAMBAT"];
   if (!validStatus.includes(data.status)) {
     const error: any = new Error(
-      `Status tidak valid. Gunakan salah satu: ${validStatus.join(", ")}`,
+      `Status tidak valid. Gunakan: ${validStatus.join(", ")}`,
     );
     error.status = 400;
     throw error;

@@ -1,7 +1,15 @@
 import prisma from "../prisma";
 
 export const createAbsensi = async (data: any) => {
-  return await prisma.absensi.create({ data });
+  const { santri_id, ...rest } = data;
+  return await prisma.absensi.create({
+    data: {
+      ...rest,
+      santri: {
+        connect: { id_santri: Number(santri_id) },
+      },
+    },
+  });
 };
 
 export const getAbsensiBySantri = async (santriId: number) => {

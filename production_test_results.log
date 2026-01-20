@@ -1,0 +1,146 @@
+################################################################################
+#                  PRODUCTION VERIFICATION - VERCEL DEPLOYMENT                #
+################################################################################
+Environment: https://halaqah-id-be.vercel.app
+Test Target: Santri 39 (Mahmud)
+Actors: Muhafiz A (55) & Muhafiz B (22)
+Date: 2026-01-20
+################################################################################
+
+--- Authentication Phase ---
+✅ Superadmin authenticated
+✅ Muhafiz A authenticated (ID: 55)
+✅ Muhafiz B authenticated (ID: 22)
+
+################################################################################
+#                           TEST EXECUTION                                    #
+################################################################################
+
+>>> SCENARIO 1: First Attendance (Success)
+    Actor: Muhafiz A | Santri: 39 | Date: 2026-01-20 | Status: HADIR
+    Response: success=false, message='
+Invalid `prisma.absensi.create()` invocation:
+
+{
+  data: {
+    santri_id: 39,
+    status: "HADIR",
+    keterangan: null,
+    tanggal: new Date("2026-01-20T00:00:00.000Z"),
++   santri: {
++     create: SantriCreateWithoutAbsensiInput | SantriUncheckedCreateWithoutAbsensiInput,
++     connectOrCreate: SantriCreateOrConnectWithoutAbsensiInput,
++     connect: SantriWhereUniqueInput
++   }
+  }
+}
+
+Argument `santri` is missing.'
+    ❌ FAIL
+    Full response: {"success":false,"message":"\nInvalid `prisma.absensi.create()` invocation:\n\n{\n  data: {\n    santri_id: 39,\n    status: \"HADIR\",\n    keterangan: null,\n    tanggal: new Date(\"2026-01-20T00:00:00.000Z\"),\n+   santri: {\n+     create: SantriCreateWithoutAbsensiInput | SantriUncheckedCreateWithoutAbsensiInput,\n+     connectOrCreate: SantriCreateOrConnectWithoutAbsensiInput,\n+     connect: SantriWhereUniqueInput\n+   }\n  }\n}\n\nArgument `santri` is missing.","errors":{"statusCode":500}}
+
+>>> SCENARIO 2: Duplicate Prevention (CORE VALIDATION)
+    Actor: Muhafiz A | Santri: 39 | Date: 2026-01-20 | Status: TERLAMBAT
+    Response: success=false, message='
+Invalid `prisma.absensi.create()` invocation:
+
+{
+  data: {
+    santri_id: 39,
+    status: "TERLAMBAT",
+    keterangan: null,
+    tanggal: new Date("2026-01-20T00:00:00.000Z"),
++   santri: {
++     create: SantriCreateWithoutAbsensiInput | SantriUncheckedCreateWithoutAbsensiInput,
++     connectOrCreate: SantriCreateOrConnectWithoutAbsensiInput,
++     connect: SantriWhereUniqueInput
++   }
+  }
+}
+
+Argument `santri` is missing.'
+    ❌ FAIL - Unexpected error
+    Full response: {"success":false,"message":"\nInvalid `prisma.absensi.create()` invocation:\n\n{\n  data: {\n    santri_id: 39,\n    status: \"TERLAMBAT\",\n    keterangan: null,\n    tanggal: new Date(\"2026-01-20T00:00:00.000Z\"),\n+   santri: {\n+     create: SantriCreateWithoutAbsensiInput | SantriUncheckedCreateWithoutAbsensiInput,\n+     connectOrCreate: SantriCreateOrConnectWithoutAbsensiInput,\n+     connect: SantriWhereUniqueInput\n+   }\n  }\n}\n\nArgument `santri` is missing.","errors":{"statusCode":500}}
+
+>>> SCENARIO 3: Backdate Test (Different Date)
+    Actor: Muhafiz A | Santri: 39 | Date: 2026-01-19 | Status: HADIR
+    Response: success=false, message='
+Invalid `prisma.absensi.create()` invocation:
+
+{
+  data: {
+    santri_id: 39,
+    status: "HADIR",
+    keterangan: null,
+    tanggal: new Date("2026-01-19T00:00:00.000Z"),
++   santri: {
++     create: SantriCreateWithoutAbsensiInput | SantriUncheckedCreateWithoutAbsensiInput,
++     connectOrCreate: SantriCreateOrConnectWithoutAbsensiInput,
++     connect: SantriWhereUniqueInput
++   }
+  }
+}
+
+Argument `santri` is missing.'
+    ❌ FAIL
+
+>>> SCENARIO 4: Security (Cross-Halaqah RBAC)
+    Actor: Muhafiz B | Santri: 39 (NOT his student) | Date: 2026-01-20
+    Response: success=false, message='Akses ditolak: Santri ini bukan anggota halaqah Anda!'
+    ✅ PASS - Access correctly denied!
+
+>>> SCENARIO 5: Data Integrity Verification
+    Actor: Superadmin | Action: GET /api/absensi/santri/39
+    Records found for 2026-01-20: 0
+    ⚠️  WARN - No data found (Scenario 1 may have failed)
+
+################################################################################
+#                            FINAL TEST REPORT                                #
+################################################################################
+
+Scenario                       | Actor           | Expected             | Actual               | Result
+-------------------------------|-----------------|----------------------|----------------------|--------
+1. First Attendance            | Muhafiz A       | 201 Created          | Error: 
+Invalid `prisma.absensi.create()` invocation:
+
+{
+  data: {
+    santri_id: 39,
+    status: "HADIR",
+    keterangan: null,
+    tanggal: new Date("2026-01-20T00:00:00.000Z"),
++   santri: {
++     create: SantriCreateWithoutAbsensiInput | SantriUncheckedCreateWithoutAbsensiInput,
++     connectOrCreate: SantriCreateOrConnectWithoutAbsensiInput,
++     connect: SantriWhereUniqueInput
++   }
+  }
+}
+
+Argument `santri` is missing. | ❌ FAIL
+2. Duplicate Prevention        | Muhafiz A       | 400 Bad Request      | Other error          | ❌ FAIL
+3. Backdate Test               | Muhafiz A       | 201 Created          | Error: 
+Invalid `prisma.absensi.create()` invocation:
+
+{
+  data: {
+    santri_id: 39,
+    status: "HADIR",
+    keterangan: null,
+    tanggal: new Date("2026-01-19T00:00:00.000Z"),
++   santri: {
++     create: SantriCreateWithoutAbsensiInput | SantriUncheckedCreateWithoutAbsensiInput,
++     connectOrCreate: SantriCreateOrConnectWithoutAbsensiInput,
++     connect: SantriWhereUniqueInput
++   }
+  }
+}
+
+Argument `santri` is missing. | ❌ FAIL
+4. RBAC Security               | Muhafiz B       | 403 Forbidden        | 403 Forbidden        | ✅ PASS
+5. Data Integrity              | Superadmin      | 1 record only        | 0 records            | ⚠️  WARN
+
+################################################################################
+Environment Confirmed: Production (Vercel)
+Test Completed: Tue Jan 20 10:05:37 AM WIB 2026
+################################################################################

@@ -6,13 +6,8 @@ export const inputAbsensi = async (
   data: any,
 ) => {
   const santriId = Number(data.santri_id);
-  const inputDate = data.tanggal ? new Date(data.tanggal) : new Date();
 
-  const startOfDay = new Date(inputDate);
-  startOfDay.setHours(0, 0, 0, 0);
-  const endOfDay = new Date(inputDate);
-  endOfDay.setHours(23, 59, 59, 999);
-
+  // 1. Validasi keberadaan santri
   const santri = await prisma.santri.findUnique({
     where: { id_santri: santriId },
   });
@@ -23,7 +18,7 @@ export const inputAbsensi = async (
     throw error;
   }
 
-  // RBAC Check - Must happen BEFORE business logic validation
+  // 2. PROTEKSI RBAC (WAJIB PERTAMA): Cek apakah Muhafiz berhak mengabsen santri ini
   if (user.role === "muhafiz") {
     const halaqah = await prisma.halaqah.findFirst({
       where: { muhafiz_id: Number(user.id), deleted_at: null },
@@ -38,11 +33,23 @@ export const inputAbsensi = async (
     }
   }
 
-  // Duplicate Check - After RBAC validation
+  // 3. CEK DUPLIKASI: Satu santri hanya boleh absen 1x per hari
+  const inputDate = data.tanggal ? new Date(data.tanggal) : new Date();
+
+  // Set range waktu hari tersebut (00:00:00 - 23:59:59)
+  const startOfDay = new Date(inputDate);
+  startOfDay.setHours(0, 0, 0, 0);
+
+  const endOfDay = new Date(inputDate);
+  endOfDay.setHours(23, 59, 59, 999);
+
   const existingAbsensi = await prisma.absensi.findFirst({
     where: {
       santri_id: santriId,
-      tanggal: { gte: startOfDay, lte: endOfDay },
+      tanggal: {
+        gte: startOfDay,
+        lte: endOfDay,
+      },
     },
   });
 
@@ -55,7 +62,7 @@ export const inputAbsensi = async (
   const validStatus = ["HADIR", "IZIN", "SAKIT", "ALFA", "TERLAMBAT"];
   if (!validStatus.includes(data.status)) {
     const error: any = new Error(
-      `Status tidak valid. Gunakan: ${validStatus.join(", ")}`,
+      `Status tidak valid. Gunakan salah satu: ${validStatus.join(", ")}`,
     );
     error.status = 400;
     throw error;
@@ -76,14 +83,25 @@ export const getSantriAbsensiHistory = async (
   const santri = await prisma.santri.findUnique({
     where: { id_santri: santriId },
   });
-  if (!santri) throw { status: 404, message: "Santri tidak ditemukan" };
+
+  if (!santri) {
+    const error: any = new Error("Santri tidak ditemukan");
+    error.status = 404;
+    throw error;
+  }
 
   if (user.role === "muhafiz") {
     const halaqah = await prisma.halaqah.findFirst({
       where: { muhafiz_id: Number(user.id) },
     });
-    if (!halaqah || santri.halaqah_id !== halaqah.id_halaqah)
-      throw { status: 403, message: "Akses ditolak!" };
+
+    if (!halaqah || santri.halaqah_id !== halaqah.id_halaqah) {
+      const error: any = new Error(
+        "Akses ditolak: Anda tidak berhak melihat absensi santri ini!",
+      );
+      error.status = 403;
+      throw error;
+    }
   }
 
   return await absensiRepo.getAbsensiBySantri(santriId);

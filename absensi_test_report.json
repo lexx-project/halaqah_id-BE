@@ -1,0 +1,68 @@
+{
+  "tests": [
+    {
+      "Scenario": "Input Absensi Valid (TERLAMBAT)",
+      "Actor": "Muhafiz A",
+      "Target": "Santri A (ID: 23)",
+      "ExpectedStatus": 201,
+      "ActualStatus": 201,
+      "Result": "PASS",
+      "ErrorDetail": "{\"success\":true,\"message\":\"Absensi berhasil dicatat\",\"data\":{\"id_absensi\":1,\"santri_id\":23,\"tanggal\":\"2026-01-19T02:57:49.990Z\",\"status\":\"TERLAMBAT\",\"keterangan\":\"Telat karena hujan\"}}"
+    },
+    {
+      "Scenario": "Cross-Access Protection",
+      "Actor": "Muhafiz B",
+      "Target": "Santri A (ID: 23)",
+      "ExpectedStatus": 403,
+      "ActualStatus": 403,
+      "Result": "PASS",
+      "ErrorDetail": "{\"success\":false,\"message\":\"Akses ditolak: Santri ini bukan anggota halaqah Anda!\",\"errors\":{\"statusCode\":403}}"
+    },
+    {
+      "Scenario": "Additional Valid Input (HADIR)",
+      "Actor": "Muhafiz A",
+      "Target": "Santri A (ID: 23)",
+      "ExpectedStatus": 201,
+      "ActualStatus": 201,
+      "Result": "PASS",
+      "ErrorDetail": "{\"success\":true,\"message\":\"Absensi berhasil dicatat\",\"data\":{\"id_absensi\":2,\"santri_id\":23,\"tanggal\":\"2026-01-19T02:57:51.604Z\",\"status\":\"HADIR\",\"keterangan\":\"Tes hadir normal\"}}"
+    },
+    {
+      "Scenario": "Get History per Santri",
+      "Actor": "Muhafiz A",
+      "Target": "Santri A (ID: 23)",
+      "ExpectedStatus": 200,
+      "ActualStatus": 200,
+      "Result": "PASS",
+      "ErrorDetail": "{\"success\":true,\"message\":\"History absensi santri berhasil diambil\",\"data\":[{\"id_absensi\":2,\"santri_id\":23,\"tanggal\":\"2026-01-19T02:57:51.604Z\",\"status\":\"HADIR\",\"keterangan\":\"Tes hadir normal\"},{\"id_absensi\":1,\"santri_id\":23,\"tanggal\":\"2026-01-19T02:57:49.990Z\",\"status\":\"TERLAMBAT\",\"keterangan\":\"Telat karena hujan\"}]}"
+    },
+    {
+      "Scenario": "Get Absensi per Halaqah",
+      "Actor": "Muhafiz A",
+      "Target": "Halaqah 34 (2026-01-19)",
+      "ExpectedStatus": 200,
+      "ActualStatus": 200,
+      "Result": "PASS",
+      "ErrorDetail": "{\"success\":true,\"message\":\"Data absensi halaqah berhasil diambil\",\"data\":[{\"id_absensi\":1,\"santri_id\":23,\"tanggal\":\"2026-01-19T02:57:49.990Z\",\"status\":\"TERLAMBAT\",\"keterangan\":\"Telat karena hujan\",\"santri\":{\"nama_santri\":\"Mahmud\"}},{\"id_absensi\":2,\"santri_id\":23,\"tanggal\":\"2026-01-19T02:57:51.604Z\",\"status\":\"HADIR\",\"keterangan\":\"Tes hadir normal\",\"santri\":{\"nama_santri\":\"Mahmud\"}}]}"
+    },
+    {
+      "Scenario": "Invalid Enum Status",
+      "Actor": "Muhafiz A",
+      "Target": "Santri A (ID: 23, status: MASUK)",
+      "ExpectedStatus": 400,
+      "ActualStatus": 400,
+      "Result": "PASS",
+      "ErrorDetail": "{\"success\":false,\"message\":\"Status tidak valid. Gunakan: HADIR, IZIN, SAKIT, ALFA, TERLAMBAT\",\"errors\":{\"statusCode\":400}}"
+    },
+    {
+      "Scenario": "Cross-Access on Get History",
+      "Actor": "Muhafiz B",
+      "Target": "Santri A (ID: 23)",
+      "ExpectedStatus": 403,
+      "ActualStatus": 403,
+      "Result": "PASS",
+      "ErrorDetail": "{\"success\":false,\"message\":\"Akses ditolak: Anda tidak berhak melihat absensi santri ini!\",\"errors\":{\"statusCode\":403}}"
+    }
+  ],
+  "timestamp": "2026-01-19T02:57:55.646Z"
+}

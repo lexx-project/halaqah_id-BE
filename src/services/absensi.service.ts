@@ -13,19 +13,6 @@ export const inputAbsensi = async (
   const endOfDay = new Date(inputDate);
   endOfDay.setHours(23, 59, 59, 999);
 
-  const existingAbsensi = await prisma.absensi.findFirst({
-    where: {
-      santri_id: santriId,
-      tanggal: { gte: startOfDay, lte: endOfDay },
-    },
-  });
-
-  if (existingAbsensi) {
-    const error: any = new Error("Santri ini sudah diabsen hari ini!");
-    error.status = 400;
-    throw error;
-  }
-
   const santri = await prisma.santri.findUnique({
     where: { id_santri: santriId },
   });
@@ -36,6 +23,7 @@ export const inputAbsensi = async (
     throw error;
   }
 
+  // RBAC Check - Must happen BEFORE business logic validation
   if (user.role === "muhafiz") {
     const halaqah = await prisma.halaqah.findFirst({
       where: { muhafiz_id: Number(user.id), deleted_at: null },
@@ -48,6 +36,20 @@ export const inputAbsensi = async (
       error.status = 403;
       throw error;
     }
+  }
+
+  // Duplicate Check - After RBAC validation
+  const existingAbsensi = await prisma.absensi.findFirst({
+    where: {
+      santri_id: santriId,
+      tanggal: { gte: startOfDay, lte: endOfDay },
+    },
+  });
+
+  if (existingAbsensi) {
+    const error: any = new Error("Santri ini sudah diabsen hari ini!");
+    error.status = 400;
+    throw error;
   }
 
   const validStatus = ["HADIR", "IZIN", "SAKIT", "ALFA", "TERLAMBAT"];

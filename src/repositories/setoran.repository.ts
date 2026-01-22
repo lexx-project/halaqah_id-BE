@@ -17,7 +17,7 @@ export const getSetoranBySantri = async (santriId: number) => {
 
 export const getAllSetoran = async () => {
   return await prisma.setoran.findMany({
-    include: {
+    include: { 
       santri: {
         select: {
           nama_santri: true,

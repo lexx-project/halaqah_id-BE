@@ -6,9 +6,12 @@ import * as santriController from "../controllers/santri.controller";
 
 const router = Router();
 
-router.get("/halaqah/:halaqahId", absensiController.getByHalaqah);
-router.get("/", halaqahController.listHalaqah);
-router.get("/all", setoranController.getAll);
-router.get("/", santriController.getSantri);
+router.get("/absensi/halaqah/:halaqahId", absensiController.getByHalaqah);
+
+router.get("/halaqah", halaqahController.listHalaqah);
+
+router.get("/setoran/all", setoranController.getAll);
+
+router.get("/santri", santriController.getSantri);
 
 export default router;

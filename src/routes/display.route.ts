@@ -1,17 +1,15 @@
 import { Router } from "express";
-import * as absensiController from "../controllers/absensi.controller";
-import * as halaqahController from "../controllers/halaqah.controller";
-import * as setoranController from "../controllers/setoran.controller";
-import * as santriController from "../controllers/santri.controller";
+import * as displayController from "../controllers/display.controller";
 
 const router = Router();
 
-router.get("/absensi/halaqah/:halaqahId", absensiController.getByHalaqah);
-
-router.get("/halaqah", halaqahController.listHalaqah);
-
-router.get("/setoran/all", setoranController.getAll);
-
-router.get("/santri", santriController.getSantri);
+// All routes are PUBLIC - no authentication required
+router.get(
+  "/absensi/halaqah/:halaqahId",
+  displayController.getPublicAbsensiByHalaqah,
+);
+router.get("/halaqah", displayController.getPublicHalaqah);
+router.get("/setoran/all", displayController.getPublicAllSetoran);
+router.get("/santri", displayController.getPublicSantri);
 
 export default router;

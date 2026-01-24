@@ -17,7 +17,12 @@ export const getSetoranBySantri = async (santriId: number) => {
 
 export const getAllSetoran = async () => {
   return await prisma.setoran.findMany({
-    include: { 
+    where: {
+      santri: {
+        deleted_at: null,
+      },
+    },
+    include: {
       santri: {
         select: {
           nama_santri: true,

@@ -8,19 +8,36 @@ import { successResponse } from "../utils/response";
 
 export const getPublicHalaqah = asyncHandler(
   async (req: Request, res: Response) => {
-    const halaqahs = await halaqahRepo.getAllHalaqah();
-    return successResponse(res, "Data halaqah berhasil diambil", halaqahs);
+    const data = await halaqahRepo.getAllHalaqah();
+
+    const formattedData = data.map((h: any) => ({
+      id_halaqah: h.id_halaqah,
+      nama_halaqah: h.name_halaqah,
+      nama_muhafiz: h.muhafiz?.username || "Tanpa Muhafiz",
+      jumlah_santri: h._count?.santri || 0,
+    }));
+
+    return successResponse(res, "Data halaqah berhasil diambil", formattedData);
   },
 );
 
 export const getPublicAbsensiByHalaqah = asyncHandler(
   async (req: Request, res: Response) => {
     const { halaqahId } = req.params;
-    const absensi = await absensiRepo.getAbsensiByHalaqah(Number(halaqahId));
+    const data = await absensiRepo.getAbsensiByHalaqah(Number(halaqahId));
+
+    const formattedData = data.map((a: any) => ({
+      id_absensi: a.id_absensi,
+      nama_santri: a.santri?.nama_santri || "Anonim",
+      status: a.status,
+      keterangan: a.keterangan,
+      tanggal: a.tanggal,
+    }));
+
     return successResponse(
       res,
       "Data absensi halaqah berhasil diambil",
-      absensi,
+      formattedData,
     );
   },
 );
@@ -32,10 +49,12 @@ export const getAllSetoranPublic = asyncHandler(
     const formattedData = data.map((item: any) => ({
       id_setoran: item.id_setoran,
       nama_santri: item.santri?.nama_santri || "Anonim",
-      nama_halaqah: item.santri?.halaqah?.nama_halaqah || "Tanpa Halaqah",
-      surah: item.surah,
+      nama_halaqah: item.santri?.halaqah?.name_halaqah || "Tanpa Halaqah",
+      surat: item.surat,
       ayat: item.ayat,
-      tanggal: item.tanggal,
+      juz: item.juz,
+      kategori: item.kategori,
+      tanggal: item.tanggal_setoran,
     }));
 
     return successResponse(
@@ -48,7 +67,19 @@ export const getAllSetoranPublic = asyncHandler(
 
 export const getPublicSantri = asyncHandler(
   async (req: Request, res: Response) => {
-    const santri = await santriRepo.getAllSantri(undefined);
-    return successResponse(res, "Daftar santri berhasil diambil", santri);
+    const data = await santriRepo.getAllSantri(undefined);
+
+    const formattedData = data.map((s: any) => ({
+      id_santri: s.id_santri,
+      nama_santri: s.nama_santri,
+      nomor_telepon: s.nomor_telepon,
+      nama_halaqah: s.halaqah?.name_halaqah || "Tanpa Halaqah",
+    }));
+
+    return successResponse(
+      res,
+      "Daftar santri berhasil diambil",
+      formattedData,
+    );
   },
 );

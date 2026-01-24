@@ -6,7 +6,6 @@ import * as halaqahRepo from "../repositories/halaqah.repository";
 import * as setoranRepo from "../repositories/setoran.repository";
 import { successResponse } from "../utils/response";
 
-// PUBLIC: Get all halaqah (no auth required)
 export const getPublicHalaqah = asyncHandler(
   async (req: Request, res: Response) => {
     const halaqahs = await halaqahRepo.getAllHalaqah();
@@ -14,7 +13,6 @@ export const getPublicHalaqah = asyncHandler(
   },
 );
 
-// PUBLIC: Get absensi by halaqah ID (no auth required)
 export const getPublicAbsensiByHalaqah = asyncHandler(
   async (req: Request, res: Response) => {
     const { halaqahId } = req.params;
@@ -27,18 +25,29 @@ export const getPublicAbsensiByHalaqah = asyncHandler(
   },
 );
 
-// PUBLIC: Get all setoran globally (no auth required)
-export const getPublicAllSetoran = asyncHandler(
+export const getAllSetoranPublic = asyncHandler(
   async (req: Request, res: Response) => {
-    const setoran = await setoranRepo.getAllSetoran();
-    return successResponse(res, "Semua data setoran berhasil diambil", setoran);
+    const data = await setoranRepo.getAllSetoran();
+
+    const formattedData = data.map((item: any) => ({
+      id_setoran: item.id_setoran,
+      nama_santri: item.santri?.nama_santri || "Anonim",
+      nama_halaqah: item.santri?.halaqah?.nama_halaqah || "Tanpa Halaqah",
+      surah: item.surah,
+      ayat: item.ayat,
+      tanggal: item.tanggal,
+    }));
+
+    return successResponse(
+      res,
+      "Berhasil mengambil semua data setoran",
+      formattedData,
+    );
   },
 );
 
-// PUBLIC: Get all santri (no auth required, no filtering)
 export const getPublicSantri = asyncHandler(
   async (req: Request, res: Response) => {
-    // Call repository directly without user filtering
     const santri = await santriRepo.getAllSantri(undefined);
     return successResponse(res, "Daftar santri berhasil diambil", santri);
   },

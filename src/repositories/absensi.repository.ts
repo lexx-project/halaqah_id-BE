@@ -14,11 +14,13 @@ export const createAbsensi = async (data: any) => {
 
 export const getAbsensiBySantri = async (santriId: number) => {
   return await prisma.absensi.findMany({
-    where: { santri_id: santriId },
+    where: {
+      santri_id: santriId,
+      santri: { deleted_at: null },
+    },
     orderBy: { tanggal: "desc" },
   });
 };
-
 export const getAbsensiByHalaqah = async (halaqahId: number, date?: string) => {
   const targetDate = date ? new Date(date) : new Date();
   const startOfDay = new Date(targetDate);
@@ -28,7 +30,7 @@ export const getAbsensiByHalaqah = async (halaqahId: number, date?: string) => {
 
   return await prisma.absensi.findMany({
     where: {
-      santri: { halaqah_id: halaqahId },
+      santri: { halaqah_id: halaqahId, deleted_at: null },
       tanggal: { gte: startOfDay, lte: endOfDay },
     },
     include: {

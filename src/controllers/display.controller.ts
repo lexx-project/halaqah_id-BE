@@ -24,13 +24,18 @@ export const getPublicHalaqah = asyncHandler(
 export const getPublicAbsensiByHalaqah = asyncHandler(
   async (req: Request, res: Response) => {
     const { halaqahId } = req.params;
-    const data = await absensiRepo.getAbsensiByHalaqah(Number(halaqahId));
+    const { date } = req.query;
+
+    const data = await absensiRepo.getAbsensiByHalaqah(
+      Number(halaqahId),
+      date as string,
+    );
 
     const formattedData = data.map((a: any) => ({
       id_absensi: a.id_absensi,
       nama_santri: a.santri?.nama_santri || "Anonim",
       status: a.status,
-      keterangan: a.keterangan,
+      keterangan: a.keterangan || "-",
       tanggal: a.tanggal,
     }));
 
@@ -72,7 +77,7 @@ export const getPublicSantri = asyncHandler(
     const formattedData = data.map((s: any) => ({
       id_santri: s.id_santri,
       nama_santri: s.nama_santri,
-      nomor_telepon: s.nomor_telepon,
+      nomor_telepon: s.nomor_telepon || "-",
       nama_halaqah: s.halaqah?.name_halaqah || "Tanpa Halaqah",
     }));
 

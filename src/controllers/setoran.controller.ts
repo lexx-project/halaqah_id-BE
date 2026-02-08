@@ -10,7 +10,7 @@ export const create = asyncHandler(async (req: any, res: Response) => {
     "Setoran berhasil dicatat",
     result,
     undefined,
-    201
+    201,
   );
 });
 
@@ -18,16 +18,25 @@ export const getBySantri = asyncHandler(async (req: any, res: Response) => {
   const { santriId } = req.params;
   const result = await setoranService.getSantriHistory(
     Number(santriId),
-    req.user
+    req.user,
   );
   return successResponse(
     res,
     "History setoran santri berhasil diambil",
-    result
+    result,
   );
 });
 
-export const getAll = asyncHandler(async (_req: any, res: Response) => {
-  const result = await setoranService.getAllSetoran();
+export const getAll = asyncHandler(async (req: any, res: Response) => {
+  const { startDate, endDate } = req.query;
+
+  // Parse tanggal jika diberikan
+  const parsedStartDate = startDate ? new Date(startDate as string) : undefined;
+  const parsedEndDate = endDate ? new Date(endDate as string) : undefined;
+
+  const result = await setoranService.getAllSetoran(
+    parsedStartDate,
+    parsedEndDate,
+  );
   return successResponse(res, "Semua data setoran berhasil diambil", result);
 });

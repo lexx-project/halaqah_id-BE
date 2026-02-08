@@ -6,7 +6,7 @@ export const getSantriList = async (user: { id: number; role: string }) => {
 
   if (user.role === "muhafiz") {
     const halaqah = await prisma.halaqah.findFirst({
-      where: { muhafiz_id: user.id },
+      where: { id_muhafiz: user.id, deleted_at: null },
     });
 
     if (!halaqah) throw new Error("Anda belum memiliki halaqah");
@@ -26,14 +26,14 @@ export const createNewSantri = async (
     nomor_telepon: string;
     target: any;
     halaqah_id: number;
-  }
+  },
 ) => {
   let finalHalaqahId = data.halaqah_id;
 
   if (user.role === "muhafiz") {
     const halaqah = await prisma.halaqah.findFirst({
       where: {
-        muhafiz_id: user.id,
+        id_muhafiz: user.id,
         deleted_at: null,
       },
     });
@@ -47,19 +47,19 @@ export const createNewSantri = async (
 export const updateExistingSantri = async (
   id: number,
   user: { id: number; role: string },
-  data: any
+  data: any,
 ) => {
   const santri = await santriRepo.getSantriById(id);
   if (!santri) throw new Error("Santri tidak ditemukan");
 
   if (user.role === "muhafiz") {
     const halaqah = await prisma.halaqah.findFirst({
-      where: { muhafiz_id: user.id },
+      where: { id_muhafiz: user.id, deleted_at: null },
     });
 
     if (santri.halaqah_id !== halaqah?.id_halaqah) {
       const error: any = new Error(
-        "Akses ditolak: Santri ini bukan anggota halaqah Anda!"
+        "Akses ditolak: Santri ini bukan anggota halaqah Anda!",
       );
       error.statusCode = 403;
       throw error;
@@ -72,18 +72,18 @@ export const updateExistingSantri = async (
 
 export const deleteSantri = async (
   id: number,
-  user: { id: number; role: string }
+  user: { id: number; role: string },
 ) => {
   const santri = await santriRepo.getSantriById(id);
   if (!santri) throw new Error("Santri tidak ditemukan!!");
 
   if (user.role === "muhafiz") {
     const halaqah = await prisma.halaqah.findFirst({
-      where: { muhafiz_id: user.id },
+      where: { id_muhafiz: user.id, deleted_at: null },
     });
     if (santri.halaqah_id !== halaqah?.id_halaqah) {
       const error: any = new Error(
-        "Akses ditolak: Santri ini bukan anggota halaqah Anda!"
+        "Akses ditolak: Santri ini bukan anggota halaqah Anda!",
       );
       error.statusCode = 403;
       throw error;

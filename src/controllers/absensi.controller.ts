@@ -42,3 +42,27 @@ export const getByHalaqah = asyncHandler(async (req: any, res: Response) => {
 
   return successResponse(res, "Data absensi halaqah berhasil diambil", result);
 });
+
+export const update = asyncHandler(async (req: any, res: Response) => {
+  const { id } = req.params;
+
+  const result = await absensiService.updateAbsensi(
+    Number(id),
+    req.user,
+    req.body,
+  );
+
+  return successResponse(res, "Absensi berhasil diupdate", result);
+});
+
+export const createAsatidz = asyncHandler(async (req: any, res: Response) => {
+  const result = await absensiService.inputAbsensiAsatidz(req.body);
+
+  return successResponse(
+    res,
+    "Absensi asatidz berhasil dicatat",
+    result,
+    undefined,
+    201,
+  );
+});

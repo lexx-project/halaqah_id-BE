@@ -9,15 +9,15 @@ router.use(authMiddleware);
 
 router.post(
   "/",
-  roleMiddleware(["superadmin", "muhafiz"]),
-  setoranController.create
+  roleMiddleware(["superadmin", "muhafiz", "kepala_muhafiz"]),
+  setoranController.create,
 );
 
 router.get(
   "/all",
   authMiddleware,
-  roleMiddleware(["superadmin"]),
-  setoranController.getAll
+  roleMiddleware(["superadmin", "kepala_muhafiz"]),
+  setoranController.getAll,
 );
 
 router.get("/santri/:santriId", authMiddleware, setoranController.getBySantri);

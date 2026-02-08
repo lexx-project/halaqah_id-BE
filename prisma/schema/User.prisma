@@ -8,5 +8,7 @@ model User {
 
     deleted_at DateTime?
 
+    absensiAsatidz AbsensiAsatidz[]
+
     @@map("user")
 }

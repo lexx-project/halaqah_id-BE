@@ -7,7 +7,7 @@ export const createSetoran = async (data: any) => {
 export const getSetoranBySantri = async (santriId: number) => {
   return await prisma.setoran.findMany({
     where: {
-      id_santri: santriId,
+      santri_id: santriId,
     },
     orderBy: {
       tanggal_setoran: "desc",

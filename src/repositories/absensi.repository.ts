@@ -5,7 +5,7 @@ export const createAbsensi = async (data: any) => {
   return await prisma.absensi.create({
     data: {
       ...rest,
-      santri: {
+      Santri: {
         connect: { id_santri: Number(santri_id) },
       },
     },
@@ -16,7 +16,7 @@ export const getAbsensiBySantri = async (santriId: number) => {
   return await prisma.absensi.findMany({
     where: {
       santri_id: santriId,
-      santri: {
+      Santri: {
         deleted_at: null,
       },
     },
@@ -37,7 +37,7 @@ export const getAbsensiByHalaqah = async (halaqahId: number, date?: string) => {
 
   return await prisma.absensi.findMany({
     where: {
-      santri: {
+      Santri: {
         halaqah_id: halaqahId,
         deleted_at: null,
       },
@@ -47,7 +47,7 @@ export const getAbsensiByHalaqah = async (halaqahId: number, date?: string) => {
       },
     },
     include: {
-      santri: {
+      Santri: {
         select: {
           nama_santri: true,
         },

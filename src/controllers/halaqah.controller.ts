@@ -8,17 +8,17 @@ export const createHalaqah = asyncHandler(
     const { name_halaqah, muhafiz_id } = req.body;
     const halaqah = await halaqahRepository.createHalaqah(
       name_halaqah,
-      muhafiz_id
+      muhafiz_id,
     );
     return successResponse(res, "Halaqah berhasil dibuat", halaqah);
-  }
+  },
 );
 
 export const listHalaqah = asyncHandler(
   async (_req: Request, res: Response) => {
     const halaqahs = await halaqahRepository.getAllHalaqah();
     return successResponse(res, "Data halaqah berhasil diambil", halaqahs);
-  }
+  },
 );
 
 export const updateHalaqah = asyncHandler(
@@ -26,7 +26,7 @@ export const updateHalaqah = asyncHandler(
     const { id } = req.params;
     const updated = await halaqahRepository.updateHalaqah(Number(id), req.body);
     return successResponse(res, "Halaqah berhasil diupdate", updated);
-  }
+  },
 );
 
 export const deleteHalaqah = asyncHandler(
@@ -34,14 +34,14 @@ export const deleteHalaqah = asyncHandler(
     const { id } = req.params;
     const deleted = await halaqahRepository.deleteHalaqah(Number(id));
     return successResponse(res, "Halaqah berhasil dihapus", deleted);
-  }
+  },
 );
 
 export const listDeletedHalaqah = asyncHandler(
   async (_req: Request, res: Response) => {
     const deleted = await halaqahRepository.getDeletedHalaqah();
     return successResponse(res, "Data halaqah berhasil diambil", deleted);
-  }
+  },
 );
 
 export const restoreHalaqah = asyncHandler(
@@ -49,5 +49,5 @@ export const restoreHalaqah = asyncHandler(
     const { id } = req.params;
     const restored = await halaqahRepository.restoreHalaqah(Number(id));
     return successResponse(res, "Halaqah berhasil dihapus", restored);
-  }
+  },
 );

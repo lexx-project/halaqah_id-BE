@@ -121,7 +121,7 @@ export const updateAbsensi = async (
   const absensi = await prisma.absensi.findUnique({
     where: { id_absensi: id },
     include: {
-      santri: true,
+      Santri: true,
     },
   });
 
@@ -137,7 +137,7 @@ export const updateAbsensi = async (
       where: { id_muhafiz: Number(user.id), deleted_at: null },
     });
 
-    if (!halaqah || absensi.santri.halaqah_id !== halaqah.id_halaqah) {
+    if (!halaqah || absensi.Santri.halaqah_id !== halaqah.id_halaqah) {
       const error: any = new Error(
         "Akses ditolak: Anda tidak berhak mengedit absensi santri ini!",
       );
@@ -216,7 +216,7 @@ export const inputAbsensiAsatidz = async (data: any) => {
 
   const existingAbsensi = await prisma.absensiAsatidz.findFirst({
     where: {
-      id_user: userId,
+      user_id: userId,
       tanggal_absensi: {
         gte: startOfDay,
         lte: endOfDay,
@@ -233,7 +233,7 @@ export const inputAbsensiAsatidz = async (data: any) => {
   // Simpan absensi asatidz
   return await prisma.absensiAsatidz.create({
     data: {
-      id_user: userId,
+      user_id: userId,
       status: data.status,
       keterangan: data.keterangan || null,
       tanggal_absensi: inputDate,

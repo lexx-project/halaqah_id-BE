@@ -17,7 +17,7 @@ export const getSetoranBySantri = async (santriId: number) => {
 
 export const getAllSetoran = async (startDate?: Date, endDate?: Date) => {
   const whereClause: any = {
-    santri: {
+    Santri: {
       deleted_at: null,
     },
   };
@@ -36,7 +36,7 @@ export const getAllSetoran = async (startDate?: Date, endDate?: Date) => {
   return await prisma.setoran.findMany({
     where: whereClause,
     include: {
-      santri: {
+      Santri: {
         select: {
           nama_santri: true,
           halaqah: {

@@ -1,0 +1,34 @@
+model Absensi {
+  id_absensi Int            @id(map: "absensi_pkey") @default(autoincrement())
+  santri_id  Int
+  tanggal    DateTime?      @default(now()) @db.Timestamptz(6)
+  status     statusAbsensi? @default(HADIR)
+  keterangan String?
+  Santri     Santri         @relation(fields: [santri_id], references: [id_santri], onDelete: Cascade, onUpdate: NoAction, map: "absensi_santri_id_fkey")
+}
+
+model User {
+  id_user         Int              @id(map: "user_pkey") @default(autoincrement())
+  email           String           @unique(map: "user_email_key")
+  password        String
+  role            String           @default("muhafiz")
+  deleted_at      DateTime?        @db.Timestamp(6)
+  username        String?          @unique(map: "user_username_key")
+  Halaqah         Halaqah?
+  absensi_asatidz AbsensiAsatidz[]
+}
+
+enum Role {
+  admin
+  muhafiz
+  kepala_muhafiz
+  santri
+}
+
+enum StatusAbsensi {
+  HADIR
+  IZIN
+  SAKIT
+  ALFA
+  TERLAMBAT
+}

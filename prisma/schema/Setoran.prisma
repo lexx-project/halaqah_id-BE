@@ -1,23 +1,19 @@
-enum KategoriSetoran {
-  MURAJAAH
-  ZIYADAH
-  INTENS
-  BACAAN
-}
-
 model Setoran {
-  id_setoran      Int             @id @default(autoincrement())
-  id_santri       Int
-  
-  tanggal_setoran DateTime        @default(now())
-  
+  id_setoran      Int              @id(map: "setoran_pkey") @default(autoincrement())
+  santri_id       Int
+  tanggal_setoran DateTime?        @default(now()) @db.Timestamptz(6)
   juz             Int
   surat           String
   ayat            String
-  kategori        KategoriSetoran 
-  
-  created_at      DateTime        @default(now())
-  updated_at      DateTime        @updatedAt
+  kategori        KategoriSetoran? @default(HAFALAN)
+  taqwim          String?
+  keterangan      String?
+  Santri          Santri           @relation(fields: [santri_id], references: [id_santri], onDelete: Cascade, onUpdate: NoAction, map: "setoran_santri_id_fkey")
+}
 
-  santri          Santri          @relation(fields: [id_santri], references: [id_santri])
+enum KategoriSetoran {
+  HAFALAN
+  MURAJAAH
+  INTENS
+  BACAAN
 }

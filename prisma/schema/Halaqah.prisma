@@ -1,19 +1,14 @@
+model Halaqah {
+  id_halaqah   Int          @id(map: "halaqah_pkey") @default(autoincrement())
+  name_halaqah String
+  muhafiz_id   Int          @unique(map: "halaqah_muhafiz_id_key")
+  deleted_at   DateTime?    @db.Timestamptz(6)
+  jenis        JenisHalaqah @default(TAHFIDZ)
+  User         User         @relation(fields: [muhafiz_id], references: [id_user], map: "halaqah_muhafiz_id_fkey")
+  santri       Santri[]
+}
+
 enum JenisHalaqah {
   TAHFIDZ
   BACAAN
-}
-
-model Halaqah {
-  id_halaqah   Int          @id @default(autoincrement())
-  name_halaqah String
-  id_muhafiz   Int          @unique
-  
-  jenis        JenisHalaqah @default(TAHFIDZ) 
-  
-  created_at   DateTime     @default(now())
-  updated_at   DateTime     @updatedAt
-  deleted_at   DateTime?
-
-  user         User         @relation(fields: [id_muhafiz], references: [id_user])
-  santri       Santri[]
 }

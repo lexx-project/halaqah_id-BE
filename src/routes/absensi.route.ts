@@ -17,14 +17,14 @@ router.get("/halaqah/:halaqahId", absensiController.getByHalaqah);
 // V2: Edit absensi (untuk perbaikan human error)
 router.put(
   "/:id",
-  roleMiddleware(["muhafiz", "kepala_muhafiz"]),
+  roleMiddleware(["superadmin", "muhafiz", "kepala_muhafiz"]),
   absensiController.update,
 );
 
 // V2: Input absensi asatidz (hanya kepala_muhafiz)
 router.post(
   "/asatidz",
-  roleMiddleware(["kepala_muhafiz"]),
+  roleMiddleware(["superadmin", "kepala_muhafiz"]),
   absensiController.createAsatidz,
 );
 

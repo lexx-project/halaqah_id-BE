@@ -1,19 +1,7 @@
 enum statusAbsensi {
-    HADIR
-    IZIN
-    SAKIT
-    ALFA
-    TERLAMBAT
-}
-
-model Absensi {
-    id_absensi Int @id @default(autoincrement())
-    santri_id Int
-    santri Santri @relation(fields: [santri_id], references: [id_santri])
-
-    tanggal DateTime @default(now())
-    status statusAbsensi @default(HADIR)
-    keterangan String?
-
-    @@map("absensi")
+  HADIR
+  IZIN
+  SAKIT
+  ALFA
+  TERLAMBAT
 }

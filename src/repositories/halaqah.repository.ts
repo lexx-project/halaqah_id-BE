@@ -2,14 +2,14 @@ import prisma from "../prisma";
 
 export const createHalaqah = async (
   name_halaqah: string,
-  muhafiz_id: number,
+  id_muhafiz: number,
 ) => {
   return await prisma.halaqah.create({
     data: {
       name_halaqah,
-      muhafiz_id,
+      id_muhafiz,
     },
-    include: { muhafiz: true },
+    include: { user: true },
   });
 };
 
@@ -19,7 +19,7 @@ export const getAllHalaqah = async () => {
       deleted_at: null,
     },
     include: {
-      muhafiz: {
+      user: {
         select: { id_user: true, username: true, email: true },
       },
       santri: {
@@ -47,7 +47,7 @@ export const getHalaqahById = async (id: number) => {
       deleted_at: null,
     },
     include: {
-      muhafiz: true,
+      user: true,
       santri: true,
     },
   });
@@ -55,7 +55,7 @@ export const getHalaqahById = async (id: number) => {
 
 export const updateHalaqah = async (
   id: number,
-  data: { name_halaqah: string; muhafiz_id: number },
+  data: { name_halaqah: string; id_muhafiz: number },
 ) => {
   return await prisma.halaqah.update({
     where: { id_halaqah: id },
